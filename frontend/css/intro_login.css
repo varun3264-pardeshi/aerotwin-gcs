@@ -1,0 +1,1245 @@
+/* ============================================================================
+   TWIN GCS (CODECREW) — 4-STAGE CINEMATIC BOOT & FACE-ID LOGIN/SIGNUP CSS
+   ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   1. MASTER FULLSCREEN OVERLAYS (STRICT Z-INDEX SEPARATION)
+   ---------------------------------------------------------------------------- */
+.cinematic-boot-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 30000;
+    background: #020712;
+    color: #ffffff;
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.tactical-login-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 25000;
+    background:
+        radial-gradient(circle at 18% 22%, rgba(0, 212, 255, 0.14) 0%, transparent 45%),
+        radial-gradient(circle at 82% 78%, rgba(0, 230, 118, 0.1) 0%, transparent 45%),
+        linear-gradient(135deg, #020713 0%, #061328 50%, #030917 100%);
+    color: #ffffff;
+    font-family: 'Inter', 'Rajdhani', sans-serif;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Completely remove hidden overlays from click/render tree */
+.cinematic-boot-overlay.hidden-overlay,
+.tactical-login-overlay.hidden-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+#bootStarfieldCanvas,
+#loginHudCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ----------------------------------------------------------------------------
+   2. TOP HUD NAVIGATION BAR INSIDE 4-STAGE BOOT SEQUENCE
+   ---------------------------------------------------------------------------- */
+.boot-top-hud {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: linear-gradient(180deg, rgba(2, 8, 20, 0.9) 0%, transparent 100%);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.boot-stage-pills {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.boot-stage-pill {
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: rgba(148, 163, 184, 0.8);
+    background: rgba(6, 18, 38, 0.75);
+    border: 1px solid rgba(0, 212, 255, 0.22);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.boot-stage-pill.active {
+    color: #00f0ff;
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.4);
+}
+
+.boot-stage-pill.completed {
+    color: #00e676;
+    border-color: rgba(0, 230, 118, 0.5);
+}
+
+.boot-skip-btn {
+    padding: 6px 15px;
+    border-radius: 6px;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    color: #00f0ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.boot-skip-btn:hover {
+    background: rgba(0, 212, 255, 0.32);
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.5);
+}
+
+/* ----------------------------------------------------------------------------
+   3. 4-STAGE BOOT SLIDES
+   ---------------------------------------------------------------------------- */
+.boot-stages-viewport {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boot-stage-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.97);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.boot-stage-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+/* --- STAGE 1: CODECREW ORBITAL SUNRISE --- */
+.stage1-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 50% 66%, rgba(255, 190, 90, 0.25) 0%, rgba(0, 195, 255, 0.2) 26%, rgba(2, 7, 18, 0.85) 68%),
+        url('../assets/boot_stage1_earth.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    z-index: -1;
+    animation: slowZoomBg 10s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoomBg {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.06); }
+}
+
+.codecrew-hero-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.codecrew-delta-svg {
+    width: 112px;
+    height: 112px;
+    filter: drop-shadow(0 0 24px rgba(0, 212, 255, 0.85));
+    animation: floatPulse 3s ease-in-out infinite;
+}
+
+@keyframes floatPulse {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.03); }
+}
+
+.codecrew-main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-top: 8px;
+    background: linear-gradient(180deg, #ffffff 0%, #7dd3fc 52%, #00a8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 6px 26px rgba(0, 195, 255, 0.6));
+}
+
+.codecrew-subtitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 6.5px;
+    color: #e2e8f0;
+    margin-top: 6px;
+}
+
+.codecrew-pillars-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #cbd5e1;
+}
+
+.codecrew-pillars-row span.sep {
+    color: #00d4ff;
+}
+
+.stage1-horizon-flare {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 8px;
+    background: radial-gradient(circle, #ffffff 0%, #ffe082 25%, #00d4ff 65%, transparent 100%);
+    box-shadow: 0 0 55px 18px rgba(0, 212, 255, 0.55), 0 0 90px 30px rgba(255, 193, 7, 0.35);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* --- STAGE 2: LOADING MODULES & HOLOGRAPHIC BLUEPRINT --- */
+.stage2-split-container {
+    width: min(1200px, 92vw);
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.loading-modules-panel {
+    background: linear-gradient(145deg, rgba(6, 18, 38, 0.88), rgba(3, 10, 24, 0.94));
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.75);
+}
+
+.loading-modules-heading {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: #ffffff;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.module-check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.module-check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(10, 25, 50, 0.55);
+    border: 1px solid rgba(0, 212, 255, 0.14);
+    transition: all 0.25s ease;
+}
+
+.module-check-row.done {
+    background: rgba(0, 230, 118, 0.1);
+    border-color: rgba(0, 230, 118, 0.45);
+}
+
+.module-check-row.active-loading {
+    background: rgba(0, 212, 255, 0.16);
+    border-color: #00f0ff;
+}
+
+.mod-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+.mod-icon-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.mod-status-ind {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    border: 2px solid rgba(0, 212, 255, 0.35);
+    color: transparent;
+}
+
+.module-check-row.active-loading .mod-status-ind {
+    border-color: #00f0ff;
+    border-top-color: transparent;
+    animation: spinRing 0.8s linear infinite;
+}
+
+.module-check-row.done .mod-status-ind {
+    background: rgba(0, 230, 118, 0.2);
+    border-color: #00e676;
+    color: #00e676;
+}
+
+@keyframes spinRing {
+    to { transform: rotate(360deg); }
+}
+
+.stage2-holograms-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.holo-blueprint-card {
+    position: relative;
+    width: 100%;
+    height: 205px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: radial-gradient(circle at center, rgba(0, 180, 255, 0.16) 0%, rgba(2, 9, 22, 0.95) 80%);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.holo-blueprint-card img {
+    max-width: 92%;
+    max-height: 92%;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 18px rgba(0, 212, 255, 0.65)) saturate(1.35);
+}
+
+.holo-scan-laser {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00f0ff, #ffffff, #00f0ff, transparent);
+    box-shadow: 0 0 16px 3px rgba(0, 240, 255, 0.75);
+    animation: verticalLaserSweep 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes verticalLaserSweep {
+    0% { top: 8%; }
+    100% { top: 92%; }
+}
+
+.holo-tag-label {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #00f0ff;
+    background: rgba(2, 10, 24, 0.85);
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 212, 255, 0.35);
+}
+
+/* --- STAGE 3: TWIN GCS HANGAR REVEAL --- */
+.stage3-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(180deg, rgba(2, 8, 20, 0.3) 0%, rgba(2, 8, 20, 0.15) 45%, rgba(2, 8, 20, 0.92) 92%),
+        url('../assets/boot_stage3_hangar_uav.jpg');
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+    animation: slowZoomBg 10s ease-in-out infinite alternate;
+}
+
+.stage3-content-wrap {
+    margin-top: auto;
+    margin-bottom: 48px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 42px;
+    border-radius: 18px;
+    background: radial-gradient(ellipse at center, rgba(2, 10, 28, 0.82) 0%, rgba(2, 10, 28, 0.35) 75%, transparent 100%);
+}
+
+.twingcs-hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    line-height: 1.05;
+}
+
+.twingcs-hero-title .white-part { color: #ffffff; }
+.twingcs-hero-title .cyan-part { color: #00d4ff; text-shadow: 0 0 28px rgba(0, 212, 255, 0.85); }
+
+.twingcs-hero-sub1 { font-size: 22px; font-weight: 700; color: #f8fafc; margin-top: 8px; }
+.twingcs-hero-sub2 { font-size: 15px; font-weight: 500; color: #cbd5e1; margin-top: 4px; }
+
+.powered-by-box {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.powered-by-box .lbl { font-size: 11.5px; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; }
+.powered-by-box .brand { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: 4px; color: #38bdf8; }
+.powered-chevrons { font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 900; letter-spacing: 4px; color: #00f0ff; }
+
+/* --- STAGE 4: PHOTOREALISTIC ENGINE DIGITAL TWIN & 4 PILLARS --- */
+.stage4-engine-arena {
+    position: relative;
+    width: min(1150px, 92vw);
+    height: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stage4-hud-ring {
+    position: absolute;
+    width: 410px;
+    height: 410px;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(0, 212, 255, 0.35);
+    animation: spinRing 28s linear infinite;
+    pointer-events: none;
+}
+
+.stage4-engine-img-wrap {
+    position: relative;
+    z-index: 5;
+    width: 630px;
+    height: 345px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stage4-engine-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: lighten;
+    filter: contrast(1.12) saturate(1.22);
+}
+
+.stage4-feature-node {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(6, 20, 42, 0.9), rgba(4, 12, 28, 0.95));
+    border: 1px solid rgba(0, 212, 255, 0.45);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    min-width: 225px;
+}
+
+.stage4-feature-node.top-left { top: 26px; left: 20px; }
+.stage4-feature-node.top-right { top: 26px; right: 20px; }
+.stage4-feature-node.bottom-left { bottom: 52px; left: 20px; }
+.stage4-feature-node.bottom-right { bottom: 52px; right: 20px; }
+
+.feat-node-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1px solid rgba(0, 212, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.feat-node-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    line-height: 1.35;
+}
+
+.stage4-bottom-motto {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: #cbd5e1;
+    white-space: nowrap;
+}
+
+/* --- BOTTOM PROGRESS BAR --- */
+.boot-bottom-progress-area {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 26px;
+}
+
+.boot-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: min(550px, 84vw);
+}
+
+.boot-progress-track {
+    flex: 1;
+    height: 12px;
+    border-radius: 20px;
+    background: rgba(8, 24, 48, 0.85);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    padding: 2px;
+    overflow: hidden;
+}
+
+.boot-progress-fill {
+    height: 100%;
+    width: 12%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #0072ff 0%, #00d4ff 60%, #7df9ff 100%);
+    box-shadow: 0 0 18px #00d4ff;
+    transition: width 0.2s linear;
+}
+
+.boot-progress-pct {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    min-width: 55px;
+    text-align: right;
+}
+
+.boot-status-caption {
+    margin-top: 7px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 2.5px;
+    color: #94a3b8;
+}
+
+/* ============================================================================
+   5. CLEAN, ADVANCED LOGIN + SIGN UP + LIVE WEBCAM FACE ID SCANNER PORTAL
+   ============================================================================ */
+.login-top-bar {
+    position: relative;
+    width: 100%;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.22);
+    background: rgba(3, 10, 24, 0.88);
+    backdrop-filter: blur(10px);
+}
+
+.login-brand-cluster {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-security-badges {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sec-pill {
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: rgba(0, 212, 255, 0.12);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    color: #7dd3fc;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11.5px;
+}
+
+.sec-pill.green {
+    background: rgba(0, 230, 118, 0.12);
+    border-color: rgba(0, 230, 118, 0.4);
+    color: #00e676;
+}
+
+/* Main Auth Container (Centered Sovereign Defense Enclave) */
+.auth-portal-wrapper {
+    position: relative;
+    z-index: 15;
+    width: min(560px, 94vw);
+    margin: auto;
+    background: linear-gradient(160deg, rgba(8, 20, 42, 0.96) 0%, rgba(4, 11, 26, 0.98) 100%);
+    border: 1px solid rgba(0, 212, 255, 0.45);
+    border-radius: 18px;
+    box-shadow: 0 24px 68px rgba(0, 0, 0, 0.85), 0 0 36px rgba(0, 212, 255, 0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Mode Switcher Tabs: [ 🔐 LOGIN ]  [ 📝 SIGN UP (NEW REGISTRATION) ] */
+.auth-mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(3, 9, 20, 0.9);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.auth-tab-btn {
+    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #94a3b8;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth-tab-btn:hover {
+    color: #ffffff;
+    background: rgba(0, 212, 255, 0.06);
+}
+
+.auth-tab-btn.active {
+    color: #00f0ff;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.16) 0%, rgba(0, 212, 255, 0.03) 100%);
+    border-bottom-color: #00f0ff;
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+/* 2-Column Body: Left Interactive Showcase, Right Authentication Forms */
+.auth-body-grid {
+    display: block;
+    width: 100%;
+}
+
+.auth-forms-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: auto;
+}
+
+/* ==========================================================================
+   LEFT SHOWCASE: INTERACTIVE 3D ENGINE & QUANTUM TELEMETRY
+   ========================================================================== */
+.login-showcase-pane {
+    padding: 24px 26px;
+    border-right: 1px solid rgba(0, 212, 255, 0.2);
+    background: radial-gradient(circle at 50% 30%, rgba(0, 180, 255, 0.09) 0%, rgba(2, 6, 20, 0.96) 85%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    user-select: none;
+}
+
+.showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.sh-badge-live {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #00e676;
+    letter-spacing: 1px;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.sh-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    margin: 3px 0 2px 0;
+}
+
+.sh-sub {
+    font-size: 11px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+.sh-controls-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.sh-ctrl-btn {
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 4px;
+    color: #94a3b8;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 9px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sh-ctrl-btn:hover,
+.sh-ctrl-btn.active {
+    color: #00f0ff;
+    background: rgba(0, 212, 255, 0.22);
+    border-color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
+}
+
+.sh-ctrl-btn.pulse-action {
+    color: #00e676;
+    border-color: rgba(0, 230, 118, 0.4);
+    background: rgba(0, 230, 118, 0.08);
+}
+
+.sh-ctrl-btn.pulse-action:hover {
+    background: rgba(0, 230, 118, 0.25);
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+}
+
+.showcase-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(0, 10, 28, 0.7);
+    border: 1px solid rgba(0, 212, 255, 0.22);
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.8);
+    cursor: crosshair;
+}
+
+#loginInteractiveHoloCanvas {
+    display: block;
+    width: 100%;
+    height: 250px;
+}
+
+.holo-scan-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.holo-telemetry-tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.tag-cyl1 {
+    top: 36%;
+    left: 6%;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.tag-cyl2 {
+    top: 36%;
+    right: 6%;
+    color: #00e676;
+    background: rgba(0, 230, 118, 0.15);
+    border: 1px solid rgba(0, 230, 118, 0.4);
+}
+
+.tag-cyl3 {
+    top: 64%;
+    left: 6%;
+    color: #ff9100;
+    background: rgba(255, 145, 0, 0.15);
+    border: 1px solid rgba(255, 145, 0, 0.4);
+}
+
+.tag-cyl4 {
+    top: 64%;
+    right: 6%;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.tag-turbo {
+    top: 8%;
+    left: 36%;
+    color: #ff5252;
+    background: rgba(255, 82, 82, 0.15);
+    border: 1px solid rgba(255, 82, 82, 0.4);
+}
+
+.holo-hint-badge {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(148, 163, 184, 0.8);
+    background: rgba(0, 0, 0, 0.65);
+    padding: 2px 8px;
+    border-radius: 10px;
+    pointer-events: none;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.showcase-bottom-dock {
+    margin-top: 10px;
+}
+
+.fft-wave-row {
+    background: rgba(3, 12, 28, 0.75);
+    border: 1px solid rgba(0, 212, 255, 0.18);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+.fft-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: #94a3b8;
+    margin-bottom: 2px;
+}
+
+.fft-rate {
+    color: #00f0ff;
+    font-weight: 700;
+}
+
+#loginFftWaveCanvas {
+    display: block;
+    width: 100%;
+    height: 34px;
+}
+
+.showcase-defense-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.def-tile {
+    background: rgba(4, 16, 36, 0.75);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 4px;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.dt-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-bottom: 3px;
+}
+
+.dt-dot.green { background: #00e676; box-shadow: 0 0 6px #00e676; }
+.dt-dot.cyan { background: #00f0ff; box-shadow: 0 0 6px #00f0ff; }
+.dt-dot.orange { background: #ff9100; box-shadow: 0 0 6px #ff9100; }
+.dt-dot.purple { background: #d500f9; box-shadow: 0 0 6px #d500f9; }
+
+.dt-lbl {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+}
+
+.dt-val {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 1px;
+}
+
+/* Quick Helper Row */
+.login-quick-helper-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+
+.quick-helper-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.quick-helper-pill {
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 4px;
+    color: #00f0ff;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-helper-pill:hover {
+    background: rgba(0, 212, 255, 0.25);
+    border-color: #00f0ff;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.quick-helper-pill.danger {
+    color: #ff8a80;
+    border-color: rgba(255, 82, 82, 0.3);
+    background: rgba(255, 82, 82, 0.08);
+}
+
+.quick-helper-pill.danger:hover {
+    background: rgba(255, 82, 82, 0.25);
+    box-shadow: 0 0 8px rgba(255, 82, 82, 0.3);
+}
+
+/* Defense Cryptographic Enclave Banner */
+.login-crypto-shield-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 230, 118, 0.08);
+    border: 1px solid rgba(0, 230, 118, 0.25);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 4px;
+}
+
+.cs-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.cs-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-text strong {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: #00e676;
+    letter-spacing: 0.5px;
+}
+
+.cs-text span {
+    font-size: 10px;
+    color: #94a3b8;
+    line-height: 1.3;
+}
+
+/* Responsive adjustment for tablets & smaller screens */
+@media (max-width: 940px) {
+    .auth-portal-wrapper {
+        width: min(560px, 94vw);
+    }
+    .auth-body-grid {
+        grid-template-columns: 1fr;
+    }
+    .login-showcase-pane {
+        display: none;
+    }
+}
+
+.auth-form-pane {
+    padding: 28px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auth-form-pane.hidden-pane {
+    display: none !important;
+}
+
+.auth-pane-title h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+
+.auth-pane-title p {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 4px;
+    margin-bottom: 18px;
+}
+
+.clean-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.clean-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.clean-input-group.full-width {
+    grid-column: span 2;
+}
+
+.clean-input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.clean-input-group label span.req {
+    color: #00f0ff;
+    font-size: 11px;
+}
+
+.clean-input-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(6, 16, 34, 0.9);
+    border: 1.5px solid rgba(0, 212, 255, 0.3);
+    border-radius: 9px;
+    padding: 10px 14px;
+    transition: all 0.2s ease;
+}
+
+.clean-input-box:focus-within {
+    border-color: #00f0ff;
+    box-shadow: 0 0 14px rgba(0, 212, 255, 0.28);
+    background: rgba(10, 24, 50, 0.95);
+}
+
+.clean-input-box .i-icon {
+    font-size: 15px;
+    color: #00d4ff;
+}
+
+.clean-input-box input,
+.clean-input-box select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+}
+
+.clean-input-box select option {
+    background: #07162e;
+    color: #ffffff;
+}
+
+.pwd-eye-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+}
+
+.pwd-eye-btn:hover {
+    color: #00f0ff;
+}
+
+/* Primary Action Buttons */
+.auth-primary-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 10px;
+    border: 1px solid #00f0ff;
+    background: linear-gradient(90deg, #0052d4 0%, #00a8ff 50%, #00f0ff 100%);
+    color: #020816;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(0, 212, 255, 0.45);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth-primary-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 34px rgba(0, 240, 255, 0.8);
+}
+
+.auth-primary-btn.green-btn {
+    border-color: #00e676;
+    background: linear-gradient(90deg, #00897b 0%, #00c853 50%, #00e676 100%);
+    box-shadow: 0 0 24px rgba(0, 230, 118, 0.45);
+}
+
+.auth-secondary-row {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.auth-link-btn {
+    background: none;
+    border: none;
+    color: #00f0ff;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Status Banner inside Auth */
+.auth-status-banner {
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    text-align: center;
+    display: none;
+}
+
+.auth-status-banner.show {
+    display: block;
+}
+
+.auth-status-banner.ok {
+    background: rgba(0, 230, 118, 0.14);
+    border: 1px solid #00e676;
+    color: #00e676;
+}
+
+.auth-status-banner.err {
+    background: rgba(255, 23, 68, 0.15);
+    border: 1px solid #ff1744;
+    color: #ff6b81;
+}

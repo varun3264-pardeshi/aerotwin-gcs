@@ -1,0 +1,26 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Antigravity & AI Assistant Brain
+.gemini/
+scratch/
+cloudflared.exe
+
+# Golden Backup (local safety archive)
+BACKUP_TWIN_GCS_GOLDEN/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

